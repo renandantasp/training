@@ -8,3 +8,4 @@ typedef struct Queue{
 void initialize_queue(Queue* q);
 void enqueue(Queue* q, int value);
 int dequeue(Queue* q);
+int peek_q(Queue* q);

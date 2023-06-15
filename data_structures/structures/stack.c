@@ -23,7 +23,7 @@ int pop(Stack* stack){
 
 }
 
-int peek(Stack* stack){
+int peek_s(Stack* stack){
   if(stack->top == NULL){
     puts("Stack is empty");
     return -1;

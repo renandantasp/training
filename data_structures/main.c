@@ -1,5 +1,6 @@
 #include "structures/linked_list.h"
 #include "structures/stack.h"
+#include "structures/queue.h"
 
 int main(){
 
@@ -38,7 +39,7 @@ int main(){
   push(&stack, 3);
   push(&stack, 1);
   push(&stack, 0);
-  peek(&stack);
+  printf("Value peeked: %d\n", peek_s(&stack));
   printf("Value popped: %d\n", pop(&stack));
   printf("Value popped: %d\n", pop(&stack));
   push(&stack, 2);
@@ -46,6 +47,25 @@ int main(){
   printf("Value popped: %d\n", pop(&stack));
   printf("Value popped: %d\n", pop(&stack));
   printf("Value popped: %d\n", pop(&stack));
+
+  puts("------------------------------------------ ");
+  puts("------------ Queue Operations ------------ ");
+
+  Queue queue;
+  initialize_queue(&queue);
+  enqueue(&queue, 1);
+  enqueue(&queue, 2);
+  enqueue(&queue, 3);
+  enqueue(&queue, 4);
+  
+  printf("Value peeked: %d\n", peek_q(&queue));
+  printf("Value dequeued: %d\n", dequeue(&queue));
+  printf("Value dequeued: %d\n", dequeue(&queue));
+  enqueue(&queue, 5);
+  printf("Value dequeued: %d\n", dequeue(&queue));
+  printf("Value dequeued: %d\n", dequeue(&queue));
+  printf("Value dequeued: %d\n", dequeue(&queue));
+  printf("Value dequeued: %d\n", dequeue(&queue));
 
   puts("------------------------------------------ ");
 

@@ -7,4 +7,4 @@ typedef struct Stack{
 void initialize_stack(Stack* stack);
 void push(Stack* stack, int value);
 int pop(Stack* stack);
-int peek(Stack* stack);
+int peek_s(Stack* stack);
