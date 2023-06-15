@@ -10,7 +10,8 @@ void merge(int arr[], int ini, int mid, int end){
   int s1 = mid - ini + 1;
   int s2 = end - mid;
 
-  int aux1[s1], aux2[s2];
+  int *aux1 = (int*)malloc(s1 * sizeof(int));
+  int *aux2 = (int*)malloc(s2 * sizeof(int));
   
   for(i = 0; i < s1; i++) aux1[i] = arr[ini + i];
   for(i = 0; i < s2; i++) aux2[i] = arr[mid + i + 1];
@@ -19,8 +20,10 @@ void merge(int arr[], int ini, int mid, int end){
   k = ini;
 
   while( i < s1 && j < s2)
-    if(aux1[i] <= aux2[j]) arr[k++] = aux1[i++];
-    else arr[k++] = aux2[j++];
+    if(aux1[i] <= aux2[j]) 
+      arr[k++] = aux1[i++];
+    else 
+      arr[k++] = aux2[j++];
     
 
   while(i < s1)
@@ -30,13 +33,16 @@ void merge(int arr[], int ini, int mid, int end){
   while(j < s2)
     arr[k++] = aux2[j++];
 
+  free(aux1);
+  free(aux2);
+
 }
 
 
 void mergeSort(int arr[], int ini, int end){
   if (ini >= end) return;
 
-  int mid = (ini + (end-1))/2;
+  int mid = (ini + end)/2;
   
   mergeSort(arr, ini, mid);
   mergeSort(arr, mid+1, end);
@@ -50,7 +56,7 @@ int main(){
   for (int i = 0; i < SIZE; i++)
         arr[i] = rand() % 10000;
   
-  // for(int i=0; i<SIZE;i++) printf("%d ", abc[i]);
+  // for(int i=0; i<SIZE;i++) printf("%d ", arr[i]);
   
   clock_t begin = clock();
   mergeSort(arr, 0, SIZE);
@@ -59,6 +65,6 @@ int main(){
 
   printf("Time spent: %lf\n", time_spent);
 
-  // for(int i=0; i<SIZE;i++) printf("%d ", abc[i]);
+  // for(int i=0; i<SIZE;i++) printf("%d ", arr[i]);
 
 }
