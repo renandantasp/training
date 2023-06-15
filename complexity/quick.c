@@ -2,6 +2,8 @@
 #include<stdio.h>
 #include<time.h>
 
+#define SIZE 100000
+
 int partition(int arr[], int ini, int end){
   int pivot = arr[end];
   int i = ini - 1;
@@ -34,20 +36,19 @@ void quickSort(int arr[], int ini, int end){
 
 
 int main(){
-  int size = 500000;
-  int arr[size];
-  for (int i = 0; i < size; i++)
+  int arr[SIZE];
+  for (int i = 0; i < SIZE; i++)
         arr[i] = rand() % 10000;
   
-  // for(int i=0; i<8;i++) printf("%d ", abc[i]);
+  // for(int i=0; i<SIZE;i++) printf("%d ", arr[i]);
   
   clock_t begin = clock();
-  quickSort(arr, 0, size);
+  quickSort(arr, 0, SIZE);
   clock_t end = clock();
   double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
   printf("Time spent: %lf\n", time_spent);
 
-  // for(int i=0; i<8;i++) printf("%d ", abc[i]);
+  // for(int i=0; i<SIZE;i++) printf("%d ", arr[i]);
 
 }
