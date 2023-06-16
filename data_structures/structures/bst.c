@@ -94,7 +94,6 @@ void postorder_trav(Tnode* root) {
   printf("%d ", root->data);
 }
 
-
 void print2DUtil(Tnode* root, int space)
 {
     if (root == NULL)
@@ -112,9 +111,20 @@ void print2DUtil(Tnode* root, int space)
     print2DUtil(root->left, space);
 }
  
-// Wrapper over print2DUtil()
 void print2D(Tnode* root)
 {
     // Pass initial space count as 0
     print2DUtil(root, 0);
 }
+
+int get_height(Tnode* root){
+  if(root == NULL) return 0;
+
+  int left = get_height(root->left);
+  int right = get_height(root->right);
+
+  if (left > right){
+    return left+1;
+  }
+  return right+1;
+} 

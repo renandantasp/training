@@ -19,3 +19,4 @@ void inorder_trav(Tnode* node);
 void postorder_trav(Tnode* node);
 void print2DUtil(struct Tnode* root, int space);
 void print2D(struct Tnode* root);
+int get_height(Tnode* root);
