@@ -43,7 +43,7 @@ int search_node(Tnode** rootptr, int value){
   if(value < root->data)
     return search_node(&(root->left), value);
   
-  return search_node(&(root->left), value);
+  return search_node(&(root->right), value);
 
 }
 
@@ -52,7 +52,7 @@ void remove_node(Tnode** rootptr, int data) {
     if (root == NULL) {
         return;
     }
-    if (data < (root)->data) {
+    if (data < root->data) {
         remove_node(&(root)->left, data);
     } else if (data > (root)->data) {
         remove_node(&(root)->right, data);

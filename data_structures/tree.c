@@ -15,7 +15,6 @@ int main(){
   // remove_node(&tree, 32);
   // remove_node(&tree, 2);
   // remove_node(&tree, 17);
-
   print2D(tree);
 
   puts("\nPre-Order: ");
