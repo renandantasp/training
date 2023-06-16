@@ -2,7 +2,11 @@
 #include<stdio.h>
 #include<time.h>
 
-#define SIZE 100000
+#define SIZE 10000000
+
+int* create_array(int size){
+  return (int *) malloc(size * sizeof(int));
+}
 
 void merge(int arr[], int ini, int mid, int end){
   int i, j, k;
@@ -10,8 +14,8 @@ void merge(int arr[], int ini, int mid, int end){
   int s1 = mid - ini + 1;
   int s2 = end - mid;
 
-  int *aux1 = (int*)malloc(s1 * sizeof(int));
-  int *aux2 = (int*)malloc(s2 * sizeof(int));
+  int *aux1 = create_array(s1);
+  int *aux2 = create_array(s2);
   
   for(i = 0; i < s1; i++) aux1[i] = arr[ini + i];
   for(i = 0; i < s2; i++) aux2[i] = arr[mid + i + 1];
@@ -33,8 +37,8 @@ void merge(int arr[], int ini, int mid, int end){
   while(j < s2)
     arr[k++] = aux2[j++];
 
-  free(aux1);
-  free(aux2);
+  // free(aux1);
+  // free(aux2);
 
 }
 
@@ -51,10 +55,11 @@ void mergeSort(int arr[], int ini, int end){
   
 }
 
+
 int main(){
-  int arr[SIZE];
+  int* arr = create_array(SIZE);
   for (int i = 0; i < SIZE; i++)
-        arr[i] = rand() % 10000;
+        arr[i] = rand() % RAND_MAX;
   
   // for(int i=0; i<SIZE;i++) printf("%d ", arr[i]);
   

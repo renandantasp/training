@@ -4,6 +4,10 @@
 
 #define SIZE 100000
 
+int* create_array(int size){
+  return (int *) malloc(size * sizeof(int));
+}
+
 int partition(int arr[], int ini, int end){
   int pivot = arr[end];
   int i = ini - 1;
@@ -36,9 +40,9 @@ void quickSort(int arr[], int ini, int end){
 
 
 int main(){
-  int arr[SIZE];
+  int* arr = create_array(SIZE);
   for (int i = 0; i < SIZE; i++)
-        arr[i] = rand() % 10000;
+        arr[i] = rand() % RAND_MAX;
   
   // for(int i=0; i<SIZE;i++) printf("%d ", arr[i]);
   
