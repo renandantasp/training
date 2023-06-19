@@ -103,7 +103,6 @@ class Stack {
     }
 };
 
-
 class Queue {
   private:
     Node* front;
@@ -140,9 +139,6 @@ class Queue {
     }
 
 };
-
-
-
 
 int main(){
   LinkedList list;
