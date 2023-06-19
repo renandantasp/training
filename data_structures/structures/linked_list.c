@@ -50,6 +50,7 @@ void delete_node(Node** head, int data){
 
   if (temp == NULL){
     printf("Value '%d' not found inside the list", data);
+    return;
   }
 
   prev->next = temp->next;
