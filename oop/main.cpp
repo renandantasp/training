@@ -18,26 +18,38 @@ class Node {
 class LinkedList {
   private:
     Node* head;
+    Node* tail;
   public:
-    LinkedList() : head(nullptr) {};
+    LinkedList() : head(nullptr), tail(nullptr) {};
 
     void insert_begin(const int value){
       Node* n = new Node(value);
+      if (head == nullptr){
+        head = n;
+        tail = n;
+        return;
+      }
       n->next = head;
       head = n;
     }
 
     void display(){
       Node* current = head;
+
+      if(current == nullptr){
+        std::cout << "This structure is empty" << std::endl;
+      }
       
       while(current != nullptr){
         std::cout << current->data << " ";
         current = current->next;
       } 
+      std::cout << std::endl;
     }
 
     void insert_after(const int value, const int after){
       Node* current = head;
+
       while(current != nullptr && current->data != after){
         current = current->next;
       }
@@ -51,12 +63,15 @@ class LinkedList {
     }
 
     void insert_end(const int value){
-      Node* current = head;
+      Node* current = tail;
       Node* n = new Node(value);
-      while(current->next != nullptr){
-        current = current->next;
+      if (tail == nullptr){
+        head = n;
+        tail = n;
+        return;
       }
       current->next = n;
+      tail = n;
     }
 
     void delete_val(const int value){
@@ -74,102 +89,106 @@ class LinkedList {
       free(current);
     }
 
+    int remove_begin(){
+      if(head == nullptr){
+        std::cout << "This structure is empty" << std::endl;
+        tail = nullptr;
+        return -1;
+      }
+
+      Node* to_delete = head;
+      head = head->next;
+      int value = to_delete->data;
+      delete to_delete;
+      return value;
+    }
     
 
 };
 
 class Stack {
   private:
-    Node* top;
+    LinkedList list;
   public:
-    Stack() : top(nullptr){};
     
     void push(const int value){
-      Node* n = new Node(value);
-      n->next = top;
-      top = n;
+      list.insert_begin(value);
     }
 
     int pop(){
-      if(top == nullptr){
-        std::cout << "Empty stack" << std::endl;
-        return -1;
-      }
-      Node* pop = top;
-      top = top->next;
-      int value = pop->data;
-      free(pop);
-      return value;
+      return list.remove_begin();
     }
+
+    void display(){
+      list.display();
+    }
+    
 };
 
 class Queue {
   private:
-    Node* front;
-    Node* back;
+    LinkedList list;
   public:
-    Queue() : front(nullptr), back(nullptr) {};
     
     void enqueue(const int value){
-      Node* n = new Node(value);
-      if (front == nullptr){
-        front = n;
-        back = n;
-        return;
-      }
-      Node* current = back;
-      current->next = n;
-      back = n;
+      list.insert_end(value);
     }
 
     int dequeue(){
-      if(front == nullptr){
-        std::cout << "Empty queue" << std::endl;
-        return -1;
-      }
+      return list.remove_begin();
+    }
 
-      Node* deq = front;
-      front = front->next;
-      if (front == nullptr){
-        back = nullptr;
-      }
-      int value = deq->data;
-      free(deq);
-      return value;
+    void display(){
+      list.display();
     }
 
 };
 
 int main(){
+  
+  std::cout<< "----LinkedList----" << std::endl;
+  
   LinkedList list;
-  list.insert_begin(4);
-  list.insert_begin(3);
+  list.insert_begin(2);
   list.insert_begin(1);
   list.insert_begin(0);
-  list.insert_after(2,1);
-  list.insert_end(5);
-  list.delete_val(5);
+  list.insert_end(3);
+  list.insert_end(4);
+  list.remove_begin();
+  list.remove_begin();
   list.display();
 
-  std::cout<< std::endl;
+  std::cout<< "---------------------" << std::endl << std::endl;
+  std::cout<< "------- Stack -------" << std::endl;
 
   Stack s;
-  s.push(3);
-  s.push(2);
   s.push(1);
-  std::cout << s.pop() << " ";
-  std::cout << s.pop() << " ";
-  std::cout << s.pop() << " ";
+  s.push(2);
+  s.push(3);
+  s.push(4);
+  s.push(5);
+  std::cout << "Value popped: " << s.pop() << std::endl;
+  std::cout << "Value popped: " << s.pop() << std::endl;
+  std::cout << "Value popped: " << s.pop() << std::endl;
   
-  std::cout<< std::endl;
+  s.display();
+
+  std::cout<< "---------------------" << std::endl << std::endl;
+  std::cout<< "------- Queue -------" << std::endl;
 
   Queue q;
   q.enqueue(1);
   q.enqueue(2);
   q.enqueue(3);
-  std::cout << q.dequeue() << " ";
-  std::cout << q.dequeue() << " ";
-  std::cout << q.dequeue() << " ";
+  q.enqueue(4);
+  q.enqueue(5);
+  std::cout << "Value dequeued: " << q.dequeue() << std::endl;
+  std::cout << "Value dequeued: " << q.dequeue() << std::endl;
+  std::cout << "Value dequeued: " << q.dequeue() << std::endl;
+
+  q.display();
+
+  std::cout<< "---------------------" << std::endl << std::endl;
 
 
 }
