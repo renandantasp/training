@@ -102,7 +102,6 @@ class LinkedList {
       delete to_delete;
       return value;
     }
-    
 
 };
 
