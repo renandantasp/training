@@ -1,5 +1,6 @@
 ﻿using GDash.Core;
 using GDash.MVVM.Model;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace GDash.MVVM.ViewModel
     {
         public ObservableObject CurrentVM { get; set; }
         public string NameVM { get; set; }
-
         public ICommand ToUser => new RelayCommand(_ =>
         {
             CurrentVM = new UserVM();
@@ -28,8 +28,7 @@ namespace GDash.MVVM.ViewModel
             RaisePropertyChanged(nameof(CurrentVM));
         }, canExecute => NameVM != nameof(Essay));
 
-
-        public MainVM() 
+        public MainVM()
         {
             CurrentVM = new UserVM();
             NameVM = nameof(User);

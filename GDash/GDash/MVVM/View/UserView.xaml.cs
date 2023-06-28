@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace GDash.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for UserView.xaml
+    /// Interação lógica para UserView.xam
     /// </summary>
     public partial class UserView : UserControl
     {

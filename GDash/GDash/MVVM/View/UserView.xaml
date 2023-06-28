@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GDash.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <Grid Margin="1,40,1,1">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -33,14 +33,15 @@
                     <DataGridTextColumn Header="Tag" Binding="{Binding Tag}" />
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
                     <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
+                    <DataGridTextColumn Header="Profile Picutre" Binding="{Binding ProfileImage}" />
                     <DataGridTextColumn Header="Bio" Binding="{Binding Bio}" />
                     <DataGridTextColumn Header="Essays"  Binding="{Binding EssayStr}" />
-                    
+
                 </DataGrid.Columns>
             </DataGrid>
 
 
         </ScrollViewer>
-        
+
     </Grid>
 </UserControl>

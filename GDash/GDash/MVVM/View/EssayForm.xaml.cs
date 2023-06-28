@@ -1,4 +1,5 @@
 ﻿using GDash.MVVM.Model;
+using GDash.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GDash.DB;
 
 namespace GDash.MVVM.View
 {
@@ -24,10 +26,12 @@ namespace GDash.MVVM.View
         public EssayForm()
         {
             InitializeComponent();
-            ObservableCollection<User> users = UserManager.GetUsers();
-            
+            UserConn conn = new UserConn();
+            List<User> users = conn.GetAllDB().Cast<User>().ToList();
+
+
             UserIdComboBox.ItemsSource = users.Select(u => u.Id);
-              
+
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)

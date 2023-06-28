@@ -1,4 +1,5 @@
 ﻿using GDash.Core;
+using GDash.DB;
 using GDash.MVVM.Model;
 using GDash.MVVM.View;
 using System;
@@ -14,6 +15,7 @@ namespace GDash.MVVM.ViewModel
     public class EssayVM : ObservableObject
     {
         public ObservableCollection<Essay> Essays { get; set; }
+        private EssayConn conn;
 
         private Essay _selectedEssasy;
         public Essay SelectedEssay
@@ -27,22 +29,21 @@ namespace GDash.MVVM.ViewModel
 
         public ICommand CreateCMD => new RelayCommand(_ =>
         {
-            Essay essay = new Essay();
-            essay.Id = Guid.NewGuid().ToString();
+            Essay newEssay = new Essay();
+            newEssay.Id = Guid.NewGuid().ToString();
 
             EssayForm essayForm = new EssayForm();
 
             essayForm.Title = "New Essay";
-            essayForm.DataContext = essay;
+            essayForm.DataContext = newEssay;
             essayForm.ShowDialog();
 
             if (essayForm.DialogResult.HasValue && essayForm.DialogResult.Value && essayForm.UserIdComboBox.Text != string.Empty)
             {
-                EssayManager.CreateEssay(essay);
-                UserManager.AddEssayToUser(essay.Id, essay.UserId);
-                SelectedEssay = essay;
+                conn.InsertEssayDB(newEssay);
+                SelectedEssay = newEssay;
             }
-        }, canExecute => UserManager.Any());
+        }, canExecute => conn.HasUser());
 
         public ICommand UpdateCMD => new RelayCommand(exec => {
             Essay editedEssay = SelectedEssay.Clone();
@@ -51,24 +52,31 @@ namespace GDash.MVVM.ViewModel
             essayForm.Title = "Essay Edit";
             essayForm.DataContext = editedEssay;
             essayForm.ShowDialog();
+
             if (essayForm.DialogResult.HasValue && essayForm.DialogResult.Value)
             {
-                EssayManager.EditEssay(SelectedEssay, editedEssay);
+                conn.AlterEssayDB(editedEssay);
             }
 
-        }, canExecute => Essays.Any());
+        }, canExecute => Essays.Any() && SelectedEssay != null);
         public ICommand DeleteCMD => new RelayCommand(_ => {
 
             string userId = SelectedEssay.UserId;
-            UserManager.RemoveEssayToUser(SelectedEssay.Id, SelectedEssay.UserId);
-
-            EssayManager.DeleteEssay(SelectedEssay);
+            conn.DeleteEssayDB(SelectedEssay.Id);
 
             SelectedEssay = Essays.FirstOrDefault();
         }, canExecute => Essays.Any());
+        
+        
+        ObservableCollection<Essay> GetEssays()
+        {
+            return new ObservableCollection<Essay>(conn.GetEssaysDB());
+        }
+
         public EssayVM()
         {
-            Essays = EssayManager.GetEssays();
+            conn = new EssayConn();
+            Essays = GetEssays();
         }
     }
 }

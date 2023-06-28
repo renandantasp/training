@@ -8,7 +8,7 @@ using System.Windows.Markup;
 
 namespace GDash.MVVM.Model
 {
-    public class User : ObservableObject
+    public class User : ObservableObject, IModel
     {
 
         private string _id;
@@ -116,7 +116,12 @@ namespace GDash.MVVM.Model
 
         public User Clone()
         {
-            return (User) MemberwiseClone();
+            return (User)MemberwiseClone();
+        }
+
+        public IModel GetObject()
+        {
+            return this;
         }
 
         public User()
@@ -129,12 +134,12 @@ namespace GDash.MVVM.Model
             Bio = string.Empty;
             Essays = new List<string>();
             Lists = new List<string>();
-            
+
         }
 
-        public User(string name, string tag, string email, string password, string profileImage, string bio)
+        public User(string id, string name, string tag, string email, string password, string profileImage, string bio)
         {
-            Id = Guid.NewGuid().ToString();
+            Id = id;
             Name = name;
             Tag = tag;
             Email = email;
@@ -145,6 +150,7 @@ namespace GDash.MVVM.Model
             Lists = new List<string>();
 
         }
+
 
     }
 }

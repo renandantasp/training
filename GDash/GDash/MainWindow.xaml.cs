@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace GDash
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interação lógica para MainWindow.xam
     /// </summary>
     public partial class MainWindow : Window
     {
