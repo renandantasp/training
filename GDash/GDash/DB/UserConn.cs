@@ -3,6 +3,7 @@ using GDash.MVVM.Model;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,19 +13,13 @@ namespace GDash.DB
 {
     public class UserConn : ICRUD
     {
-        private Connection conn = new Connection();
-        NpgsqlCommand command;
+        private IConnection connectionHandler;
+        private IDbConnection _conn;
 
-        // private IConnection conn;
-        public UserConn()
+        public UserConn(IConnection _connection)
         {
-
-        }
-
-        public UserConn(IConnection connection)
-        {
-            // conn = SetConnection(infostr);
-            // command = SetCommand();
+            connectionHandler = _connection;
+            _conn = connectionHandler.GetConnection();
         }
 
         public List<IModel> GetAllDB()
@@ -33,78 +28,61 @@ namespace GDash.DB
 
             try
             {
-                conn.connection.Open();
                 string commandString = "select * from users";
 
-                using (command = new NpgsqlCommand())
+                _conn.Open();
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
-                    command.Connection = conn.connection;
-                    command.CommandText = commandString;
+                    _command.Connection = _conn;
+                    _command.CommandText = commandString;
 
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    using (IDataReader reader = _command.ExecuteReader())
                     {
-                        if (reader.HasRows)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                userList.Add(new User(
-                                    reader.GetString(0),
-                                    reader.GetString(1),
-                                    reader.GetString(2),
-                                    reader.GetString(3),
-                                    reader.GetString(4),
-                                    reader.GetString(5),
-                                    reader.GetString(6)));
-                            }
+                            userList.Add(new User(
+                                reader.GetString(0),
+                                reader.GetString(1),
+                                reader.GetString(2),
+                                reader.GetString(3),
+                                reader.GetString(4),
+                                reader.GetString(5),
+                                reader.GetString(6)));
                         }
 
                     }
 
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"{ex.Message}\nGetAllDB.");
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
             return userList;
         }
 
-        public List<User> GetUsers()
-        {
-            List<User> users = GetAllDB().Cast<User>().ToList();
-            return users;
-        }
         public void InsertDB(IModel element)
         {
-
             User user = element.GetObject() as User;
-
 
             try
             {
+                
                 string commandString = "INSERT INTO users (id, name, tag, email, password, profileimage, bio)"
-                                        + "VALUES(@p1, @p2, @p3, @p4, @p5, @p6, @p7)";
+                                        + $"VALUES('{user.Id}', '{user.Name}', '{user.Tag}', '{user.Email}', '{user.Password}', '{user.ProfileImage}', '{user.Bio}')";
+                _conn = connectionHandler.GetConnection();
+                _conn.Open();
 
-                conn.connection.Open();
-
-                using (command = new NpgsqlCommand(commandString, conn.connection))
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
 
-                    command.Parameters.AddWithValue("p1", user.Id);
-                    command.Parameters.AddWithValue("p2", user.Name);
-                    command.Parameters.AddWithValue("p3", user.Tag);
-                    command.Parameters.AddWithValue("p4", user.Email);
-                    command.Parameters.AddWithValue("p5", user.Password);
-                    command.Parameters.AddWithValue("p6", user.ProfileImage);
-                    command.Parameters.AddWithValue("p7", user.Bio);
-
-
-                    command.ExecuteNonQuery();
+                    _command.Connection = _conn;
+                    _command.CommandText = commandString;
+                    _command.ExecuteNonQuery();
                 }
 
             }
@@ -114,7 +92,7 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
         }
 
@@ -124,12 +102,16 @@ namespace GDash.DB
             try
             {
                 string commandStr = "UPDATE users SET name=@p2, tag=@p3, email=@p4, password=@p5, " +
-                                    " profileimage=@p6, bio=@p7 WHERE id=@p1";
+                                    "profileimage=@p6, bio=@p7 WHERE id=@p1";
 
-                conn.connection.Open();
+                _conn = connectionHandler.GetConnection();
+                _conn.Open();
 
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
+                    _command.Connection = _conn;
+                    _command.CommandText = commandStr;
+                    /*
                     command.Parameters.AddWithValue("p1", user.Id);
                     command.Parameters.AddWithValue("p2", user.Name);
                     command.Parameters.AddWithValue("p3", user.Tag);
@@ -137,8 +119,8 @@ namespace GDash.DB
                     command.Parameters.AddWithValue("p5", user.Password);
                     command.Parameters.AddWithValue("p6", user.ProfileImage);
                     command.Parameters.AddWithValue("p7", user.Bio);
-
-                    command.ExecuteNonQuery();
+                    */
+                    _command.ExecuteNonQuery();
 
                 }
 
@@ -149,20 +131,25 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
         }
        
-        public void DeleteBD(string id)
+        public void DeleteDB(string id)
         {
             try
             {
-                conn.connection.Open();
+                string commandStr = $"DELETE FROM essay WHERE id='{id}';";
 
-                using (command = new NpgsqlCommand("DELETE FROM users WHERE id=@p1 ", conn.connection))
+                _conn = connectionHandler.GetConnection();
+                _conn.Open();
+
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
-                    command.Parameters.AddWithValue("p1", id);
-                    command.ExecuteNonQuery();
+                    _command.Connection = _conn;
+                    _command.CommandText = commandStr;
+
+                    _command.ExecuteNonQuery();
                 }
 
             }
@@ -172,28 +159,34 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
+        }
+
+        public List<User> GetUsers()
+        {
+            List<User> users = GetAllDB().Cast<User>().ToList();
+            return users;
         }
 
         public string GetEssaysFromId(string id)
         {
             List<string> essayList = new List<string>();
 
+            string commandStr = $"SELECT essaytitle FROM users LEFT JOIN essay ON users.id = essay.userid WHERE users.id = '{id}';";
             try
             {
-                conn.connection.Open();
-                string commandStr = "SELECT essaytitle FROM users LEFT JOIN essay ON " +
-                                    "users.id = essay.userid WHERE users.id = @p1;";
+                
+                _conn.Open();
 
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
+
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
-                    command.Parameters.AddWithValue("p1", id);
+                    _command.Connection = _conn;
+                    _command.CommandText = commandStr;
 
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    using (IDataReader reader = _command.ExecuteReader())
                     {
-                        if (reader.HasRows)
-                        {
                             while (reader.Read())
                             {
                                 if (!reader.IsDBNull(0))
@@ -203,24 +196,22 @@ namespace GDash.DB
 
                             }
                             return string.Join(", ", essayList);
-                        }
-                        return string.Empty;
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"{ex.Message} GetEssaysFromId");
                 return string.Empty;
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
 
         }
 
-
     }
+
 }

@@ -26,7 +26,7 @@ namespace GDash.MVVM.View
         public EssayForm()
         {
             InitializeComponent();
-            UserConn conn = new UserConn();
+            UserConn conn = new UserConn(new Postgres());
             List<User> users = conn.GetAllDB().Cast<User>().ToList();
 
 

@@ -24,7 +24,7 @@ namespace GDash.MVVM.ViewModel
         private User _selectedUser;
         public User SelectedUser
         {
-            get { return _selectedUser; }
+            get => _selectedUser;
             set
             {
                 _selectedUser = value;
@@ -67,7 +67,7 @@ namespace GDash.MVVM.ViewModel
         }, canExecute => Users.Any() && SelectedUser != null);
         public ICommand DeleteCMD => new RelayCommand(_ => {
 
-            conn.DeleteBD(SelectedUser.Id);
+            conn.DeleteDB(SelectedUser.Id);
 
             SelectedUser = Users.FirstOrDefault();
         }, canExecute => Users.Any());
@@ -80,7 +80,9 @@ namespace GDash.MVVM.ViewModel
         
         public UserVM()
         {
-            conn = new UserConn();
+            IConnection postgres = new Postgres();
+            conn = new UserConn(postgres);
+            // conn = new UserConn(new Postgres());
             Users = GetUsers();
 
             for (int i=0; i<Users.Count; i++)

@@ -40,7 +40,7 @@ namespace GDash.MVVM.ViewModel
 
             if (essayForm.DialogResult.HasValue && essayForm.DialogResult.Value && essayForm.UserIdComboBox.Text != string.Empty)
             {
-                conn.InsertEssayDB(newEssay);
+                conn.InsertDB(newEssay);
                 SelectedEssay = newEssay;
             }
         }, canExecute => conn.HasUser());
@@ -55,14 +55,14 @@ namespace GDash.MVVM.ViewModel
 
             if (essayForm.DialogResult.HasValue && essayForm.DialogResult.Value)
             {
-                conn.AlterEssayDB(editedEssay);
+                conn.UpdateDB(editedEssay);
             }
 
         }, canExecute => Essays.Any() && SelectedEssay != null);
         public ICommand DeleteCMD => new RelayCommand(_ => {
 
             string userId = SelectedEssay.UserId;
-            conn.DeleteEssayDB(SelectedEssay.Id);
+            conn.DeleteDB(SelectedEssay.Id);
 
             SelectedEssay = Essays.FirstOrDefault();
         }, canExecute => Essays.Any());
@@ -70,12 +70,14 @@ namespace GDash.MVVM.ViewModel
         
         ObservableCollection<Essay> GetEssays()
         {
-            return new ObservableCollection<Essay>(conn.GetEssaysDB());
+            return new ObservableCollection<Essay>(conn.GetEssays());
         }
 
         public EssayVM()
         {
             conn = new EssayConn();
+            //postgres_conn = new EssayConn(Postgres());
+            //maria_conn = new EssayConn(Maria());
             Essays = GetEssays();
         }
     }

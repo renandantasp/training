@@ -13,6 +13,6 @@ namespace GDash.DB
         List<IModel> GetAllDB();
         void InsertDB(IModel element);
         void UpdateDB(IModel element);
-        void DeleteBD(string id);
+        void DeleteDB(string id);
     }
 }
