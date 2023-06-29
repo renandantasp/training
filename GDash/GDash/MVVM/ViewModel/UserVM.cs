@@ -46,6 +46,8 @@ namespace GDash.MVVM.ViewModel
             {
                 conn.InsertDB(user);
                 SelectedUser = user;
+                Users = GetUsers();
+                RaisePropertyChanged(nameof(Users));
             }
         }, canExecute => true);
 
@@ -61,6 +63,8 @@ namespace GDash.MVVM.ViewModel
             if (userForm.DialogResult.HasValue && userForm.DialogResult.Value)
             {
                 conn.UpdateDB(editedUser);
+                Users = GetUsers();
+                RaisePropertyChanged(nameof(Users));
 
             }
 
@@ -68,7 +72,10 @@ namespace GDash.MVVM.ViewModel
         public ICommand DeleteCMD => new RelayCommand(_ => {
 
             conn.DeleteDB(SelectedUser.Id);
-
+            
+            Users = GetUsers();
+            RaisePropertyChanged(nameof(Users));
+            
             SelectedUser = Users.FirstOrDefault();
         }, canExecute => Users.Any());
         

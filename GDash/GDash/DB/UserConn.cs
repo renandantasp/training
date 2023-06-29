@@ -101,8 +101,9 @@ namespace GDash.DB
             User user = (User)element.GetObject();
             try
             {
-                string commandStr = "UPDATE users SET name=@p2, tag=@p3, email=@p4, password=@p5, " +
-                                    "profileimage=@p6, bio=@p7 WHERE id=@p1";
+                string commandStr = $"UPDATE users SET name='{user.Name}', tag='{user.Tag}', email='{user.Email}', " + 
+                                    $"password='{user.Password}', profileimage='{user.ProfileImage}', " +
+                                    $"bio='{user.Bio}' WHERE id='{user.Id}';";
 
                 _conn = connectionHandler.GetConnection();
                 _conn.Open();
@@ -111,15 +112,6 @@ namespace GDash.DB
                 {
                     _command.Connection = _conn;
                     _command.CommandText = commandStr;
-                    /*
-                    command.Parameters.AddWithValue("p1", user.Id);
-                    command.Parameters.AddWithValue("p2", user.Name);
-                    command.Parameters.AddWithValue("p3", user.Tag);
-                    command.Parameters.AddWithValue("p4", user.Email);
-                    command.Parameters.AddWithValue("p5", user.Password);
-                    command.Parameters.AddWithValue("p6", user.ProfileImage);
-                    command.Parameters.AddWithValue("p7", user.Bio);
-                    */
                     _command.ExecuteNonQuery();
 
                 }
@@ -139,7 +131,7 @@ namespace GDash.DB
         {
             try
             {
-                string commandStr = $"DELETE FROM essay WHERE id='{id}';";
+                string commandStr = $"DELETE FROM users WHERE id='{id}';";
 
                 _conn = connectionHandler.GetConnection();
                 _conn.Open();
