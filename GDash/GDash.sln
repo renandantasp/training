@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDash", "GDash\GDash.csproj", "{9302DBBC-3DD4-448F-B9DA-A74FD07810A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDashTests", "GDashTests\GDashTests.csproj", "{6FCBA6E9-299C-40FB-A01F-2F9B904376C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9302DBBC-3DD4-448F-B9DA-A74FD07810A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9302DBBC-3DD4-448F-B9DA-A74FD07810A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9302DBBC-3DD4-448F-B9DA-A74FD07810A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FCBA6E9-299C-40FB-A01F-2F9B904376C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FCBA6E9-299C-40FB-A01F-2F9B904376C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FCBA6E9-299C-40FB-A01F-2F9B904376C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FCBA6E9-299C-40FB-A01F-2F9B904376C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,26 +1,22 @@
-﻿using GDash.Core;
-using GDash.MVVM.Model;
-using Npgsql;
+﻿using GDash.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace GDash.DB
 {
     public class UserConn : ICRUD
     {
-        private IConnection connectionHandler;
-        private IDbConnection _conn;
-
         public UserConn(IConnection _connection)
         {
             connectionHandler = _connection;
             _conn = connectionHandler.GetConnection();
         }
+
+        private IConnection connectionHandler;
+        private IDbConnection _conn;
 
         public List<IModel> GetAllDB()
         {
@@ -162,7 +158,7 @@ namespace GDash.DB
             return users;
         }
 
-        public string GetEssaysFromId(string id)
+        public string GetEssaysById(string id)
         {
             List<string> essayList = new List<string>();
 

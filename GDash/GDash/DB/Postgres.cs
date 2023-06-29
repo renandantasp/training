@@ -1,11 +1,5 @@
 ﻿using Npgsql;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace GDash.DB
 {
@@ -24,13 +18,11 @@ namespace GDash.DB
             return new NpgsqlConnection($"User ID={user};Password={password};Host={host};Port={port};Database={database};");
 
         }
-
         
         public IDbCommand GetCommand()
         {
             return new NpgsqlCommand();
         }
 
-        
     }
 }

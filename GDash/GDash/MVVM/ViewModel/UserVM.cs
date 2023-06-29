@@ -72,7 +72,7 @@ namespace GDash.MVVM.ViewModel
 
             for (int i = 0; i < Users.Count; i++)
             {
-                Users[i].EssayStr = conn.GetEssaysFromId(Users[i].Id);
+                Users[i].EssayStr = conn.GetEssaysById(Users[i].Id);
             }
             RaisePropertyChanged(nameof(Users));
         }

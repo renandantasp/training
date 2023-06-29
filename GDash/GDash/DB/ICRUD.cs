@@ -1,10 +1,5 @@
-﻿using GDash.Core;
-using GDash.MVVM.Model;
-using System;
+﻿using GDash.MVVM.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GDash.DB
 {
