@@ -12,20 +12,11 @@ namespace GDash.DB
     public class Postgres : IConnection
     {
 
-        private readonly string user;
-        private readonly string password;
-        private readonly string host;
-        private readonly string port;
-        private readonly string database;
-
-        public Postgres()
-        {
-            user = "postgres";
-            password = "admin";
-            host = "localhost";
-            port = "5555";
-            database = "postgres";
-    }
+        private readonly string user = "postgres";
+        private readonly string password = "admin";
+        private readonly string host = "localhost";
+        private readonly string port = "5555";
+        private readonly string database = "postgres";
 
         
         public IDbConnection GetConnection()

@@ -7,7 +7,7 @@
         xmlns:View="clr-namespace:GDash.MVVM.View"
         xmlns:local="clr-namespace:GDash"
         mc:Ignorable="d"
-        Title="GDash" Height="450" Width="1500">
+        Title="GDash" Height="450" Width="1000">
 
     <Grid>
         <StackPanel Orientation="Horizontal" Height="35" 

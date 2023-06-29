@@ -2,34 +2,19 @@
 using GDash.DB;
 using GDash.MVVM.Model;
 using GDash.MVVM.View;
-using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace GDash.MVVM.ViewModel
 {
     public class UserVM : ObservableObject
     {
-        public ObservableCollection<User> Users { get; set; }
         private UserConn conn;
-
-        private User _selectedUser;
-        public User SelectedUser
-        {
-            get => _selectedUser;
-            set
-            {
-                _selectedUser = value;
-            }
-        }
+        
+        public ObservableCollection<User> Users { get; set; }
+        public User SelectedUser { get; set; }
 
         public ICommand CreateCMD => new RelayCommand(_ =>
         {
@@ -49,7 +34,6 @@ namespace GDash.MVVM.ViewModel
                 UpdateUsers();
             }
         }, canExecute => true);
-
         public ICommand UpdateCMD => new RelayCommand(exec => {
            
             User editedUser = SelectedUser.Clone();
@@ -82,7 +66,6 @@ namespace GDash.MVVM.ViewModel
             return new ObservableCollection<User>(conn.GetUsers());
         }
         
-
         public void UpdateUsers()
         {
             Users = GetUsers();
@@ -93,19 +76,7 @@ namespace GDash.MVVM.ViewModel
             }
             RaisePropertyChanged(nameof(Users));
         }
-        public UserVM()
-        {
-            //conn = new UserConn(postgres);
-            //conn = new UserConn(new Postgres());
-            conn = new UserConn(new Maria());
-            Users = GetUsers();
-
-            for (int i=0; i<Users.Count; i++)
-            {
-                Users[i].EssayStr = conn.GetEssaysFromId(Users[i].Id);
-            }
-        }
-
+        
         public UserVM(IConnection db)
         {
             conn = new UserConn(db);

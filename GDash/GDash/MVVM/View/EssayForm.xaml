@@ -12,7 +12,7 @@
                 <TextBlock Text="Id"/>
                 <TextBox Text="{Binding Id}" IsEnabled="False"/>
                 <TextBlock Name="UserIdText" Text="User Id"/>
-                <ComboBox Name="UserIdComboBox" Text="{Binding UserId}"/>
+                <ComboBox Name="UserIdComboBox" IsEnabled="True" Text="{Binding UserId}"/>
                 <TextBlock Text="Essay Title"/>
                 <TextBox Name="EssayTitle" Text="{Binding EssayTitle}"/>
                 <TextBlock Text="Image"/>

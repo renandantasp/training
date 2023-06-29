@@ -14,7 +14,6 @@ namespace GDash.DB
         private readonly string user = "renan";
         private readonly string password = "admin";
         private readonly string host = "localhost";
-        private readonly string port = "3306";
         private readonly string database = "gdash";
 
 

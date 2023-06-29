@@ -23,14 +23,13 @@ namespace GDash.MVVM.View
     /// </summary>
     public partial class EssayForm : Window
     {
-        public EssayForm(IConnection db)
+        public EssayForm(IConnection db, bool isCreate)
         {
             InitializeComponent();
             UserConn conn = new UserConn(db);
             List<User> users = conn.GetAllDB().Cast<User>().ToList();
-
-
             UserIdComboBox.ItemsSource = users.Select(u => u.Id);
+            UserIdComboBox.IsEnabled = isCreate;
 
         }
 

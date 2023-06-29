@@ -3,37 +3,27 @@ using GDash.DB;
 using GDash.MVVM.Model;
 using GDash.MVVM.View;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace GDash.MVVM.ViewModel
 {
     public class EssayVM : ObservableObject
     {
-        public ObservableCollection<Essay> Essays { get; set; }
         private EssayConn conn;
-        IConnection db;
+        private IConnection db;
 
-        private Essay _selectedEssasy;
-        public Essay SelectedEssay
-        {
-            get { return _selectedEssasy; }
-            set
-            {
-                _selectedEssasy = value;
-            }
-        }
-
+        public ObservableCollection<Essay> Essays { get; set; }
+        public Essay SelectedEssay { get; set; }
+        public bool IsCreate { get; set; }
+        
         public ICommand CreateCMD => new RelayCommand(_ =>
         {
+            IsCreate = true;
             Essay newEssay = new Essay();
             newEssay.Id = Guid.NewGuid().ToString();
-
-            EssayForm essayForm = new EssayForm(db);
+            EssayForm essayForm = new EssayForm(db, IsCreate);
 
             essayForm.Title = "New Essay";
             essayForm.DataContext = newEssay;
@@ -47,10 +37,11 @@ namespace GDash.MVVM.ViewModel
                 RaisePropertyChanged(nameof(Essays));
             }
         }, canExecute => conn.HasUser());
-
         public ICommand UpdateCMD => new RelayCommand(exec => {
+
+            IsCreate = false;
             Essay editedEssay = SelectedEssay.Clone();
-            EssayForm essayForm = new EssayForm(db);
+            EssayForm essayForm = new EssayForm(db, IsCreate);
 
             essayForm.Title = "Essay Edit";
             essayForm.DataContext = editedEssay;
@@ -75,18 +66,9 @@ namespace GDash.MVVM.ViewModel
             SelectedEssay = Essays.FirstOrDefault();
         }, canExecute => Essays.Any());
         
-        
         ObservableCollection<Essay> GetEssays()
         {
             return new ObservableCollection<Essay>(conn.GetEssays());
-        }
-
-        public EssayVM()
-        {
-            //conn = new EssayConn(new Postgres());
-            //postgres_conn = new EssayConn(new Postgres());
-            conn = new EssayConn(new Maria());
-            Essays = GetEssays();
         }
 
         public EssayVM(IConnection db)

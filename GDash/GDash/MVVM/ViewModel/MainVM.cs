@@ -33,7 +33,7 @@ namespace GDash.MVVM.ViewModel
 
         public MainVM()
         {
-            conn = new Maria();
+            conn = new Postgres();
             CurrentVM = new UserVM(conn);
             NameVM = nameof(User);
         }
