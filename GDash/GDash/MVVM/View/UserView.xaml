@@ -33,7 +33,7 @@
                     <DataGridTextColumn Header="Tag" Binding="{Binding Tag}" />
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
                     <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
-                    <DataGridTextColumn Header="Profile Picutre" Binding="{Binding ProfileImage}" />
+                    <DataGridTextColumn Header="Profile Picture" Binding="{Binding ProfileImage}" />
                     <DataGridTextColumn Header="Bio" Binding="{Binding Bio}" />
                     <DataGridTextColumn Header="Essays"  Binding="{Binding EssayStr}" />
 

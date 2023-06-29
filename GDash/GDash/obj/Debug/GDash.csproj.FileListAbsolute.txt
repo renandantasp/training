@@ -90,7 +90,6 @@ C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\bin\Debug\Syst
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\bin\Debug\System.ValueTuple.xml
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDash.csproj.AssemblyReference.cache
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDash.csproj.SuggestedBindingRedirects.cache
-C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDash.exe.config
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\MainWindow.g.cs
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\MVVM\View\EssayForm.g.cs
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\MVVM\View\EssayView.g.cs
@@ -112,3 +111,5 @@ C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDas
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDash.csproj.CopyComplete
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDash.exe
 C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\obj\Debug\GDash.pdb
+C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\bin\Debug\MySqlConnector.dll
+C:\Users\renan.pasquantonio\Documents\GitHub\training\GDash\GDash\bin\Debug\MySqlConnector.xml

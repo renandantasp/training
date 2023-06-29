@@ -16,6 +16,7 @@ namespace GDash.MVVM.ViewModel
     {
         public ObservableCollection<Essay> Essays { get; set; }
         private EssayConn conn;
+        IConnection db;
 
         private Essay _selectedEssasy;
         public Essay SelectedEssay
@@ -32,7 +33,7 @@ namespace GDash.MVVM.ViewModel
             Essay newEssay = new Essay();
             newEssay.Id = Guid.NewGuid().ToString();
 
-            EssayForm essayForm = new EssayForm();
+            EssayForm essayForm = new EssayForm(db);
 
             essayForm.Title = "New Essay";
             essayForm.DataContext = newEssay;
@@ -49,7 +50,7 @@ namespace GDash.MVVM.ViewModel
 
         public ICommand UpdateCMD => new RelayCommand(exec => {
             Essay editedEssay = SelectedEssay.Clone();
-            EssayForm essayForm = new EssayForm();
+            EssayForm essayForm = new EssayForm(db);
 
             essayForm.Title = "Essay Edit";
             essayForm.DataContext = editedEssay;
@@ -82,10 +83,18 @@ namespace GDash.MVVM.ViewModel
 
         public EssayVM()
         {
-            conn = new EssayConn(new Postgres());
-            //postgres_conn = new EssayConn(Postgres());
-            //maria_conn = new EssayConn(Maria());
+            //conn = new EssayConn(new Postgres());
+            //postgres_conn = new EssayConn(new Postgres());
+            conn = new EssayConn(new Maria());
             Essays = GetEssays();
+        }
+
+        public EssayVM(IConnection db)
+        {
+            this.db = db;
+            conn = new EssayConn(this.db);
+            Essays = GetEssays();
+
         }
     }
 }

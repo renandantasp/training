@@ -74,7 +74,7 @@ namespace GDash.MVVM.ViewModel
             UpdateUsers();
 
             SelectedUser = Users.FirstOrDefault();
-        }, canExecute => Users.Any());
+        }, canExecute => Users.Any() && SelectedUser != null);
         
         ObservableCollection<User> GetUsers()
         {
@@ -95,15 +95,21 @@ namespace GDash.MVVM.ViewModel
         }
         public UserVM()
         {
-            IConnection postgres = new Postgres();
-            conn = new UserConn(postgres);
-            // conn = new UserConn(new Postgres());
+            //conn = new UserConn(postgres);
+            //conn = new UserConn(new Postgres());
+            conn = new UserConn(new Maria());
             Users = GetUsers();
 
             for (int i=0; i<Users.Count; i++)
             {
                 Users[i].EssayStr = conn.GetEssaysFromId(Users[i].Id);
             }
+        }
+
+        public UserVM(IConnection db)
+        {
+            conn = new UserConn(db);
+            UpdateUsers();
         }
 
         

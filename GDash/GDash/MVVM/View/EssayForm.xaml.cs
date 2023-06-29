@@ -23,10 +23,10 @@ namespace GDash.MVVM.View
     /// </summary>
     public partial class EssayForm : Window
     {
-        public EssayForm()
+        public EssayForm(IConnection db)
         {
             InitializeComponent();
-            UserConn conn = new UserConn(new Postgres());
+            UserConn conn = new UserConn(db);
             List<User> users = conn.GetAllDB().Cast<User>().ToList();
 
 

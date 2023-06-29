@@ -140,8 +140,8 @@ namespace GDash.DB
 
             try
             {
-                string commandStr = $"UPDATE essay SET image={essay.Image}, " +
-                                    $"essaytitle={essay.EssayTitle}, essaytext={essay.EssayTitle} WHERE id={essay.Id};";
+                string commandStr = $"UPDATE essay SET image='{essay.Image}', " +
+                                    $"essaytitle='{essay.EssayTitle}', essaytext='{essay.EssayTitle}' WHERE id='{essay.Id}';";
                 _conn.Open();
 
                 using (IDbCommand _command = connectionHandler.GetCommand())
@@ -170,7 +170,7 @@ namespace GDash.DB
             try
             {
                 Essay essay = element.GetObject() as Essay;
-                string commandStr = $"DELETE FROM essay WHERE id={essay.Id};";
+                string commandStr = $"DELETE FROM essay WHERE id='{essay.Id}';";
                 _conn.Open();
 
                 using (IDbCommand _command = connectionHandler.GetCommand())

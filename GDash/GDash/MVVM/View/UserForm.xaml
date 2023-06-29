@@ -14,12 +14,12 @@
             <TextBox Text="{Binding Name}"/>
             <TextBlock Name="TagValue" Text="Tag"/>
             <TextBox Text="{Binding Tag}"/>
-            <TextBlock Text="ProfileImage"/>
-            <TextBox Text="{Binding ProfileImage}"/>
             <TextBlock Text="Email"/>
             <TextBox Text="{Binding Email}"/>
             <TextBlock Text="Password"/>
             <TextBox Text="{Binding Password}"/>
+            <TextBlock Text="ProfileImage"/>
+            <TextBox Text="{Binding ProfileImage}"/>
             <TextBlock Text="Bio"/>
             <TextBox Height="60" Text="{Binding Bio}"/>
             <Grid>
