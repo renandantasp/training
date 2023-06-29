@@ -42,6 +42,8 @@ namespace GDash.MVVM.ViewModel
             {
                 conn.InsertDB(newEssay);
                 SelectedEssay = newEssay;
+                Essays = GetEssays();
+                RaisePropertyChanged(nameof(Essays));
             }
         }, canExecute => conn.HasUser());
 
@@ -56,13 +58,18 @@ namespace GDash.MVVM.ViewModel
             if (essayForm.DialogResult.HasValue && essayForm.DialogResult.Value)
             {
                 conn.UpdateDB(editedEssay);
+                Essays = GetEssays();
+                RaisePropertyChanged(nameof(Essays));
             }
 
         }, canExecute => Essays.Any() && SelectedEssay != null);
         public ICommand DeleteCMD => new RelayCommand(_ => {
 
             string userId = SelectedEssay.UserId;
-            conn.DeleteDB(SelectedEssay.Id);
+            conn.DeleteDB(SelectedEssay);
+
+            Essays = GetEssays();
+            RaisePropertyChanged(nameof(Essays));
 
             SelectedEssay = Essays.FirstOrDefault();
         }, canExecute => Essays.Any());
@@ -75,7 +82,7 @@ namespace GDash.MVVM.ViewModel
 
         public EssayVM()
         {
-            conn = new EssayConn();
+            conn = new EssayConn(new Postgres());
             //postgres_conn = new EssayConn(Postgres());
             //maria_conn = new EssayConn(Maria());
             Essays = GetEssays();

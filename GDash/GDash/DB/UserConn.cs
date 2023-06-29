@@ -127,11 +127,12 @@ namespace GDash.DB
             }
         }
        
-        public void DeleteDB(string id)
+        public void DeleteDB(IModel element)
         {
+            User user = element.GetObject() as User;
             try
             {
-                string commandStr = $"DELETE FROM users WHERE id='{id}';";
+                string commandStr = $"DELETE FROM users WHERE id='{user.Id}';";
 
                 _conn = connectionHandler.GetConnection();
                 _conn.Open();

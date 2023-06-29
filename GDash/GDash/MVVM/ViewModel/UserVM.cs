@@ -46,8 +46,7 @@ namespace GDash.MVVM.ViewModel
             {
                 conn.InsertDB(user);
                 SelectedUser = user;
-                Users = GetUsers();
-                RaisePropertyChanged(nameof(Users));
+                UpdateUsers();
             }
         }, canExecute => true);
 
@@ -63,19 +62,17 @@ namespace GDash.MVVM.ViewModel
             if (userForm.DialogResult.HasValue && userForm.DialogResult.Value)
             {
                 conn.UpdateDB(editedUser);
-                Users = GetUsers();
-                RaisePropertyChanged(nameof(Users));
+                UpdateUsers();
 
             }
 
         }, canExecute => Users.Any() && SelectedUser != null);
         public ICommand DeleteCMD => new RelayCommand(_ => {
 
-            conn.DeleteDB(SelectedUser.Id);
-            
-            Users = GetUsers();
-            RaisePropertyChanged(nameof(Users));
-            
+            conn.DeleteDB(SelectedUser);
+
+            UpdateUsers();
+
             SelectedUser = Users.FirstOrDefault();
         }, canExecute => Users.Any());
         
@@ -85,6 +82,17 @@ namespace GDash.MVVM.ViewModel
             return new ObservableCollection<User>(conn.GetUsers());
         }
         
+
+        public void UpdateUsers()
+        {
+            Users = GetUsers();
+
+            for (int i = 0; i < Users.Count; i++)
+            {
+                Users[i].EssayStr = conn.GetEssaysFromId(Users[i].Id);
+            }
+            RaisePropertyChanged(nameof(Users));
+        }
         public UserVM()
         {
             IConnection postgres = new Postgres();

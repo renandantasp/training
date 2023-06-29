@@ -3,6 +3,7 @@ using GDash.MVVM.ViewModel;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,23 +14,30 @@ namespace GDash.DB
     internal class EssayConn : ICRUD
     {
 
-        Connection conn = new Connection();
-        NpgsqlCommand command;
+
+        private IConnection connectionHandler;
+        private IDbConnection _conn;
+
+        public EssayConn(IConnection _connection)
+        {
+            connectionHandler = _connection;
+            _conn = connectionHandler.GetConnection();
+        }
 
         public bool HasUser()
         {
             try
             {
-                conn.connection.Open();
+                _conn.Open();
                 string commandString = "select * from users";
 
-                using (command = new NpgsqlCommand())
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
-                    command.Connection = conn.connection;
-                    command.CommandText = commandString;
+                    _command.Connection = _conn;
+                    _command.CommandText = commandString;
 
-                    using (NpgsqlDataReader reader = command.ExecuteReader()) { 
-                        return reader.HasRows;
+                    using (IDataReader reader = _command.ExecuteReader()) { 
+                        return reader.Read();
                     }
 
                 }
@@ -41,147 +49,9 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
 
-        }
-
-        public List<Essay> GetEssaysDB()
-        {
-
-            List<Essay> essayList = new List<Essay>();
-
-            try
-            {
-                conn.connection.Open();
-                string commandString = "select * from essay";
-                
-
-                using (command = new NpgsqlCommand())
-                {
-                    command.Connection = conn.connection;
-                    command.CommandText = commandString;
-
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                essayList.Add(new Essay(
-                                    reader.GetString(0),
-                                    reader.GetString(1),
-                                    reader.GetString(2),
-                                    reader.GetString(3),
-                                    reader.GetString(4)));
-
-                            }
-                        }
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.connection.Close();
-            }
-
-            return essayList;
-
-        }
-
-        public void InsertEssayDB(Essay essay)
-        {
-            try
-            {
-                conn.connection.Open();
-                string commandStr = "INSERT INTO essay (id, userid, image, " +
-                                    "essaytitle, essaytext) VALUES(@p1, @p2, @p3, @p4, @p5);";
-
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
-                {
-                    command.Parameters.AddWithValue("p1", essay.Id);
-                    command.Parameters.AddWithValue("p2", essay.UserId);
-                    command.Parameters.AddWithValue("p3", essay.Image);
-                    command.Parameters.AddWithValue("p4", essay.EssayTitle);
-                    command.Parameters.AddWithValue("p5", essay.EssayText);
-                    
-                    command.ExecuteNonQuery();
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.connection.Close();
-            }
-        }
-
-        public void AlterEssayDB(Essay essay)
-        {
-            try
-            {
-                string commandStr = "UPDATE essay SET image=@p2, " +
-                                    "essaytitle=@p3, essaytext=@p4 WHERE id=@p1;";
-                conn.connection.Open();
-
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
-                {
-
-                    command.Parameters.AddWithValue("p1", essay.Id);
-                    command.Parameters.AddWithValue("p2", essay.Image);
-                    command.Parameters.AddWithValue("p3", essay.EssayTitle);
-                    command.Parameters.AddWithValue("p4", essay.EssayText);
-
-                    command.ExecuteNonQuery();
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.connection.Close();
-            }
-        }
-
-        public void DeleteEssayDB(string id)
-        {
-            try
-            {
-
-                string commandStr = "DELETE FROM essay WHERE id=@p1;";
-                conn.connection.Open();
-
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
-                {
-                    
-                    command.Parameters.AddWithValue("p1", id);
-                    command.ExecuteNonQuery();
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn.connection.Close();
-            }
         }
 
         public List<IModel> GetAllDB()
@@ -190,29 +60,27 @@ namespace GDash.DB
 
             try
             {
-                conn.connection.Open();
+                _conn.Open();
                 string commandString = "select * from essay";
 
 
-                using (command = new NpgsqlCommand())
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
-                    command.Connection = conn.connection;
-                    command.CommandText = commandString;
+                    _command.Connection = _conn;
+                    _command.CommandText = commandString;
 
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    using (IDataReader reader = _command.ExecuteReader())
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                essayList.Add(new Essay(
-                                    reader.GetString(0),
-                                    reader.GetString(1),
-                                    reader.GetString(2),
-                                    reader.GetString(3),
-                                    reader.GetString(4)));
 
-                            }
+                        while (reader.Read())
+                        {
+                            essayList.Add(new Essay(
+                                reader.GetString(0),
+                                reader.GetString(1),
+                                reader.GetString(2),
+                                reader.GetString(3),
+                                reader.GetString(4)));
+
                         }
                     }
                 }
@@ -224,7 +92,7 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
 
             return essayList;
@@ -240,19 +108,18 @@ namespace GDash.DB
             Essay essay = element.GetObject() as Essay;
             try
             {
-                conn.connection.Open();
+                _conn.Open();
                 string commandStr = "INSERT INTO essay (id, userid, image, " +
-                                    "essaytitle, essaytext) VALUES(@p1, @p2, @p3, @p4, @p5);";
+                                    "essaytitle, essaytext)" + 
+                                    $"VALUES('{essay.Id}', '{essay.UserId}', '{essay.Image}'," + 
+                                    $"'{essay.EssayTitle}', '{essay.EssayText}');";
 
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
-                    command.Parameters.AddWithValue("p1", essay.Id);
-                    command.Parameters.AddWithValue("p2", essay.UserId);
-                    command.Parameters.AddWithValue("p3", essay.Image);
-                    command.Parameters.AddWithValue("p4", essay.EssayTitle);
-                    command.Parameters.AddWithValue("p5", essay.EssayText);
+                    _command.Connection = _conn;
+                    _command.CommandText = commandStr;
 
-                    command.ExecuteNonQuery();
+                    _command.ExecuteNonQuery();
                 }
 
 
@@ -263,7 +130,7 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
         }
 
@@ -273,19 +140,16 @@ namespace GDash.DB
 
             try
             {
-                string commandStr = "UPDATE essay SET image=@p2, " +
-                                    "essaytitle=@p3, essaytext=@p4 WHERE id=@p1;";
-                conn.connection.Open();
+                string commandStr = $"UPDATE essay SET image={essay.Image}, " +
+                                    $"essaytitle={essay.EssayTitle}, essaytext={essay.EssayTitle} WHERE id={essay.Id};";
+                _conn.Open();
 
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
 
-                    command.Parameters.AddWithValue("p1", essay.Id);
-                    command.Parameters.AddWithValue("p2", essay.Image);
-                    command.Parameters.AddWithValue("p3", essay.EssayTitle);
-                    command.Parameters.AddWithValue("p4", essay.EssayText);
-
-                    command.ExecuteNonQuery();
+                    _command.Connection = _conn;
+                    _command.CommandText = commandStr;
+                    _command.ExecuteNonQuery();
 
                 }
 
@@ -297,23 +161,24 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
         }
 
-        public void DeleteDB(string id)
+        public void DeleteDB(IModel element)
         {
             try
             {
+                Essay essay = element.GetObject() as Essay;
+                string commandStr = $"DELETE FROM essay WHERE id={essay.Id};";
+                _conn.Open();
 
-                string commandStr = "DELETE FROM essay WHERE id=@p1;";
-                conn.connection.Open();
-
-                using (command = new NpgsqlCommand(commandStr, conn.connection))
+                using (IDbCommand _command = connectionHandler.GetCommand())
                 {
 
-                    command.Parameters.AddWithValue("p1", id);
-                    command.ExecuteNonQuery();
+                    _command.Connection = _conn;
+                    _command.CommandText= commandStr;
+                    _command.ExecuteNonQuery();
 
                 }
 
@@ -324,7 +189,7 @@ namespace GDash.DB
             }
             finally
             {
-                conn.connection.Close();
+                _conn.Close();
             }
         }
     }
