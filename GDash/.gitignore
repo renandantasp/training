@@ -3,10 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-
-bin/*
-obj/*
-
 # User-specific files
 *.rsuser
 *.suo
@@ -210,11 +206,6 @@ PublishScripts/
 *.nuget.props
 *.nuget.targets
 
-
-#Not Necessary
-GDash\GDash\obj\*
-GDash\GDash\bin\*
-
 # Microsoft Azure Build Output
 csx/
 *.build.csdef
@@ -310,7 +301,7 @@ node_modules/
 *.dsw
 *.dsp
 
-# Visual Studio 6 technical files 
+# Visual Studio 6 technical files
 *.ncb
 *.aps
 

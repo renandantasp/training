@@ -3,7 +3,7 @@ using System.Data;
 
 namespace GDash.DB
 {
-    internal class Maria : IConnection
+    public class Maria : IConnection
     {
 
         private readonly string user = "renan";
@@ -19,7 +19,6 @@ namespace GDash.DB
 
         public IDbConnection GetConnection()
         {
-          
             return new MySqlConnection($"server={host};userid={user};password={password};database={database}");
         }
     }

@@ -23,8 +23,8 @@ namespace GDash
     {
         public MainWindow()
         {
-            InitializeComponent();
             DataContext = new MainVM();
+            InitializeComponent();
         }
     }
 }

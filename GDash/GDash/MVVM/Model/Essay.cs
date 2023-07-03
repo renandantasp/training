@@ -15,7 +15,6 @@ namespace GDash.MVVM.Model
         private string _image;
         private string _essayTitle;
         private string _essayText;
-        private List<string> _likes;
 
         
         public string Id
@@ -63,15 +62,6 @@ namespace GDash.MVVM.Model
                 RaisePropertyChanged(nameof(_essayText));
             }
         }
-        public List<string> Likes
-        {
-            get => _likes;
-            set
-            {
-                _likes = value;
-                RaisePropertyChanged(nameof(_likes));
-            }
-        }
 
         public Essay Clone()
         {
@@ -90,17 +80,6 @@ namespace GDash.MVVM.Model
             Image = string.Empty;
             EssayTitle = string.Empty;
             EssayText = string.Empty;
-            Likes = new List<string>();
-        }
-
-        public Essay(string userId, string image, string essayTitle, string essayText)
-        {
-            Id = Guid.NewGuid().ToString();
-            UserId = userId;
-            Image = image;
-            EssayTitle = essayTitle;
-            EssayText = essayText;
-            Likes = new List<string>();
         }
 
         public Essay(string id, string userId, string image, string essayTitle, string essayText)
@@ -110,7 +89,6 @@ namespace GDash.MVVM.Model
             Image = image;
             EssayTitle = essayTitle;
             EssayText = essayText;
-            Likes = new List<string>();
         }
     }
 }

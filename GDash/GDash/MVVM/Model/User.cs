@@ -18,8 +18,6 @@ namespace GDash.MVVM.Model
         private string _password;
         private string _profileImage;
         private string _bio;
-        private List<string> _essays;
-        private List<string> _lists;
         private string _essayStr;
 
         public string Id
@@ -85,15 +83,6 @@ namespace GDash.MVVM.Model
                 RaisePropertyChanged(nameof(Bio));
             }
         }
-        public List<string> Essays
-        {
-            get => _essays;
-            set
-            {
-                _essays = value;
-                RaisePropertyChanged(nameof(Essays));
-            }
-        }
 
         public string EssayStr
         {
@@ -124,7 +113,6 @@ namespace GDash.MVVM.Model
             Password = string.Empty;
             ProfileImage = string.Empty;
             Bio = string.Empty;
-            Essays = new List<string>();
 
         }
 
@@ -137,7 +125,6 @@ namespace GDash.MVVM.Model
             Password = password;
             ProfileImage = profileImage;
             Bio = bio;
-            Essays = new List<string>();
 
         }
 

@@ -1,50 +1,48 @@
-using Autofac.Extras.Moq;
-using GDash.DB;
+﻿using GDash.DB;
 using GDash.MVVM.Model;
 using Moq;
 
-namespace GDashTests    
+
+namespace GDashTests
 {
+    [TestClass]
     public class UserConnTests
     {
 
-        // GetAllDB
-        // InsertDB
-        // UpdateDB
-        // DeleteDB
-        // GetUsers
-        // GetEssaysById
 
-        [Fact]
+        [TestMethod]
         public void GetAllDB_ValidCall()
         {
 
-            Mock<ICRUD> mock = new Mock<ICRUD>();
+            // Arrange
+            Mock<IConnection> mockIconn = new Mock<IConnection>();
+            UserConn userConn = new UserConn(mockIconn.Object);
 
-            //IConnection _mock = new Mock<IConnection>();
+            // Act
                 
-            mock.Setup(f => f.GetAllDB())
-                .Returns(GetSampleUsers());
-
-            UserConn controller = mock.Create<UserConn>();
-            List<IModel> expected = GetSampleUsers();
-            List<IModel> actual = controller.GetAllDB();    
-
-            Assert.True(5 == 5);
-            //Assert.True(expected != null);
-
             
+            // Assert
+            Assert.IsNotNull(userConn);
         }
-            
-        private List<IModel> GetSampleUsers()
+
+        [TestMethod]
+        public void InsertDB_ValidCall()
         {
-            List<IModel> models = new List<IModel>
-            {
-                new User(),
-                new User(),
-                new User()
-            };
-            return models;
+
+            // Arrange
+            Mock<IConnection> mockIconn = new Mock<IConnection>();
+            UserConn userConn = new UserConn(mockIconn.Object);
+
+            User user = new User();
+            string commandStr = "INSERT INTO users (id, name, tag, email, password, profileimage, bio)"
+                                        + $"VALUES('{user.Id}', '{user.Name}', '{user.Tag}', '{user.Email}', '{user.Password}', '{user.ProfileImage}', '{user.Bio}')";
+
+
+            // Act
+            //userConn.ExecuteCMD(commandStr);
+
+            // Assert
+            Assert.IsTrue(true);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GDash.MVVM.Model;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,28 +10,46 @@ namespace GDash.DB
 {
     public class UserConn : ICRUD
     {
+
+        private IConnection connectionHandler;
+        private IDbConnection _conn;
+        
         public UserConn(IConnection _connection)
         {
             connectionHandler = _connection;
             _conn = connectionHandler.GetConnection();
         }
 
-        private IConnection connectionHandler;
-        private IDbConnection _conn;
-
-        public List<IModel> GetAllDB()
+        public void ExecuteCMD(string sql)
         {
-            List<IModel> userList = new List<IModel>();
-
             try
             {
-                string commandString = "select * from users";
+                _conn = connectionHandler.GetConnection();
+                _conn.Open();
+
+                using (IDbCommand _command = connectionHandler.GetCommand())
+                {
+
+                    _command.Connection = _conn;
+                    _command.CommandText = sql;
+                    _command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex){ MessageBox.Show(ex.Message); }
+            finally { _conn.Close(); }
+        }
+        
+        public List<IModel> ReadCMD(string sql)
+        {
+            List<IModel> userList = new List<IModel>();
+            try
+            {
 
                 _conn.Open();
                 using (IDbCommand _command = connectionHandler.GetCommand())
                 {
                     _command.Connection = _conn;
-                    _command.CommandText = commandString;
+                    _command.CommandText = sql;
 
                     using (IDataReader reader = _command.ExecuteReader())
                     {
@@ -45,7 +64,7 @@ namespace GDash.DB
                                 reader.GetString(5),
                                 reader.GetString(6)));
                         }
-
+                        return userList;
                     }
 
                 }
@@ -56,102 +75,49 @@ namespace GDash.DB
             }
             finally
             {
+
                 _conn.Close();
             }
             return userList;
         }
-
+        
+        public List<IModel> GetAllDB()
+        {
+            string commandString = "select * from users";
+            return ReadCMD(commandString);
+            
+        }
+            
         public void InsertDB(IModel element)
         {
             User user = element.GetObject() as User;
-
-            try
-            {
-                
-                string commandString = "INSERT INTO users (id, name, tag, email, password, profileimage, bio)"
+            string commandStr = "INSERT INTO users (id, name, tag, email, password, profileimage, bio)"
                                         + $"VALUES('{user.Id}', '{user.Name}', '{user.Tag}', '{user.Email}', '{user.Password}', '{user.ProfileImage}', '{user.Bio}')";
-                _conn = connectionHandler.GetConnection();
-                _conn.Open();
 
-                using (IDbCommand _command = connectionHandler.GetCommand())
-                {
-
-                    _command.Connection = _conn;
-                    _command.CommandText = commandString;
-                    _command.ExecuteNonQuery();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                _conn.Close();
-            }
+            ExecuteCMD(commandStr);
         }
 
         public void UpdateDB(IModel element)
         {
             User user = (User)element.GetObject();
-            try
-            {
-                string commandStr = $"UPDATE users SET name='{user.Name}', tag='{user.Tag}', email='{user.Email}', " + 
-                                    $"password='{user.Password}', profileimage='{user.ProfileImage}', " +
-                                    $"bio='{user.Bio}' WHERE id='{user.Id}';";
+            string commandStr = $"UPDATE users SET name='{user.Name}', tag='{user.Tag}', email='{user.Email}', " + 
+                                $"password='{user.Password}', profileimage='{user.ProfileImage}', " +
+                                $"bio='{user.Bio}' WHERE id='{user.Id}';";
+            
+            ExecuteCMD(commandStr);
 
-                _conn = connectionHandler.GetConnection();
-                _conn.Open();
-
-                using (IDbCommand _command = connectionHandler.GetCommand())
-                {
-                    _command.Connection = _conn;
-                    _command.CommandText = commandStr;
-                    _command.ExecuteNonQuery();
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                _conn.Close();
-            }
         }
        
         public void DeleteDB(IModel element)
         {
             User user = element.GetObject() as User;
-            try
-            {
-                string commandStr = $"DELETE FROM users WHERE id='{user.Id}';";
+            string commandStr = $"DELETE FROM users WHERE id='{user.Id}';";
 
-                _conn = connectionHandler.GetConnection();
-                _conn.Open();
-
-                using (IDbCommand _command = connectionHandler.GetCommand())
-                {
-                    _command.Connection = _conn;
-                    _command.CommandText = commandStr;
-
-                    _command.ExecuteNonQuery();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                _conn.Close();
-            }
+            ExecuteCMD(commandStr);
+            
         }
 
+        
         public List<User> GetUsers()
         {
             List<User> users = GetAllDB().Cast<User>().ToList();
@@ -161,7 +127,6 @@ namespace GDash.DB
         public string GetEssaysById(string id)
         {
             List<string> essayList = new List<string>();
-
             string commandStr = $"SELECT essaytitle FROM users LEFT JOIN essay ON users.id = essay.userid WHERE users.id = '{id}';";
             try
             {
@@ -201,6 +166,10 @@ namespace GDash.DB
 
         }
 
+        public static implicit operator UserConn(Mock<ICRUD> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
