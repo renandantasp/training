@@ -58,7 +58,7 @@ select NOME, SIGLA from DEPARTAMENTO_RDP where SIGLA like '%D%';
 merge into EMPREGADO_RDP E
 	using PESSOA_RDP P on (E.CODIGO_PESSOA = P.CODIGO)
 	when matched then
-		update EMPREGADO_RDP set SALARIO = E.SALARIO * 1.1 where SALARIO < 6000
+		update set SALARIO = E.SALARIO * 1.1 where SALARIO < 6000
 	when not matched then
 		insert into EMPREGADO_RDP values(P.CODIGO, 2, SYSDATE, 2000);
 
