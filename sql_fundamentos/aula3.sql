@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------------------------------------------------
--- Exercicio 2
+-- Exercicio 1
 
 create sequence SEQ_CODIGO_EMPREGADO_RDP start with 100 increment by 1;
 

@@ -28,3 +28,5 @@ FROM ALL_OBJECTS;
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Exercicio 4
+
+select OSUSER, SID, SERIAL# from V$SESSION where USERNAME is not null and STATUS = 'ACTIVE';
