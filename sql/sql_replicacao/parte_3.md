@@ -17,15 +17,18 @@ Além disso se um usuário tem em sua base a materialized view ele não precisa 
 
 No entanto isso vem com um custo, evidentemente a criação de muitas materialized views cria um overhead de armazenamento com tantas copias armazenadas em disco de uma mesma tabela, além disso por ser uma espécie de snapshot da query no momento de criação, nem sempre a materialized view irá representar o estado mais atual dos dados, é necessário que a materialized view seja precomputada sempre que houver novas alterações, diferente da view que executa a query a cada chamada, o que gera uma necessidade de uma estrutura de automatização de criação de novas materialized views dependendo da demanda.
 
----
-
-| Objeto | Armazenada Fisicamente | Read | Write |
-| ----------- | :-----------: | :----: | :---: |
-| Tabela    | Sim |  Sim | Yes |
-| View      | Nao |  Sim | No | 
-| Mat. View | Sim |  Sim | No |
 
 ## 2. Dentro da View Materializada, eu poderia fazer um insert? eu deveria fazer?
+
+Sim, é possível fazer inserts e outras operações de DML em uma View Materializada.
+
+A View Materializada tem o objetivo de ser uma versão mais eficiente de se ter acesso a alguma query que seja custosa de se executar, ou de disponibilizar um conjunto de dados específicos para leitura. Ela é apenas uma representação de uma ou mais de umas tabelas, portanto, apesar de poder serem feitar inserções, isso foge um pouco da proposta da View Materializada e pode ser considerado
+uma má prática.
+
+Além disso, alterações em uma View Materializada que não são replicadas para as tabelas originais serão perdidas, o que gera uma necessidade de se gerenciar uma maneira de manter as tabelas atualizadas com as alterações na View Materializada, além de manter as Views Materializadas atualizadas com as alterações que as tabelas também receberão de outras fontes. 
+
+De qualquer forma, o ganho por poder fazer inserções em uma View Materializada não se paga pelo overhead de novas regras de negócio, pois irá gerar um aumento na complexidade do sistema 
+sem gerar de fato nenhuma facilidade ou feature relevante.
 
 ## 3. O que é uma arquitetura master slave?
 

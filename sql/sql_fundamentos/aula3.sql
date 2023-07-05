@@ -19,7 +19,7 @@ begin
     select SEQ_CODIGO_EMPREGADO_RDP.NEXTVAL into new_codigo from DUAL;
     update EMPREGADO_RDP set CODIGO = new_codigo where ROWID = I.ROWID;
   end loop;  
-end;
+end;    
 
 
 alter table EMPREGADO_RDP drop constraint PK_EMPREGADO_RDP;

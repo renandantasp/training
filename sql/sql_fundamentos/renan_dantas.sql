@@ -32,26 +32,9 @@ FROM
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Exercicio 3
+
 insert into pessoa_rdp values(12, 'Pedro Serra', '13/11/1999', 'M');
 insert into pessoa_rdp values(13, 'Bruna Alves', '16/05/2003', 'F');
-
-DELETE FROM PESSOA_RDP WHERE 
-  CODIGO IN (SELECT
-  P.CODIGO
-FROM
-  PESSOA_RDP P
-  LEFT JOIN EMPREGADO_RDP E ON P.CODIGO = E.CODIGO_PESSOA
-WHERE
-  E.CODIGO IS NULL);
-
--- ou
-DELETE FROM PESSOA_RDP WHERE 
-CODIGO NOT IN (SELECT
-  P.CODIGO
-FROM
-  PESSOA_RDP P
-  INNER JOIN EMPREGADO_RDP E ON P.CODIGO = E.CODIGO_PESSOA);
-
 
 merge into PESSOA_RDP P
 using (SELECT PE.CODIGO FROM PESSOA_RDP PE LEFT JOIN EMPREGADO_RDP EM ON PE.CODIGO = EM.CODIGO_PESSOA WHERE EM.SALARIO IS NULL) E
@@ -64,13 +47,22 @@ WHEN MATCHED THEN
 ----------------------------------------------------------------------------------------------------------------------------
 -- Exercicio 4
 /*
-Um exemplo de trigger onde deve ser utilizado a clausula "before" é em casos como apresentado no treinamento, antes da inserção
-de algum elemento em uma tabela, campos como de chave primária ou qualquer outro campo not null e unique que seja interessante que 
-a própria tabela admnistre esses casos. Um outro exemplo é o caso de integridade dos dados, algumas condições podem 
 
-Alguns exemplos de trigger onde se pode ser utilizado a clausula "after" são:
-- Logging, como a inserção de timestamps em uma tabela T2 que guarda as alterações feitas em outra tabela T1;
-- Atualização ou qualquer aplicação de regras de negócio após uma deleção/inserção/alteração feita em uma tabela T1
+Um trigger é um objeto da database associado a uma tabela e executado automáticamente como resposta a eventos ou 
+ações especificas executadas na tabela. Um Trigger consiste em um Trigger Event que especifica qual ação vai ativar
+esse Trigger, e um Trigger Body, que contém as ações que serão executadas quando o trigger for ativado.
+Os dois principais tipos de trigger são os trigger "before" e "after".
+
+Os "before" trigger são executados ANTES da ação que o ativou. Isso permite que você possa modificar o dado antes
+de ser inserido/removido/alterado. Os before trigger costumam ser usados para validação dos dados. Por exemplo,
+um before trigger em uma operação de INSERT pode validar o dado que está sendo inserido e rejeitar a inserção caso
+falhe as condições.
+
+Os "after" trigger são executados DEPOIS da ação que o ativou. Isso permite ações adicionais ou a implementação de
+ações que refletem as alterações feitas pela ação que o ativou. After triggers são utilizados para Logging, como 
+a inserção de timestamps em uma tabela T2 que guarda as alterações feitas em outra tabela T1, e para atualização ou 
+qualquer aplicação de regras de negócio após uma deleção/inserção/alteração feita em uma tabela T1.
+
 */
 
 ----------------------------------------------------------------------------------------------------------------------------
@@ -97,6 +89,6 @@ no campo NOME, esse indice será armazenado no tablespace G2K_PRIV_INDX:
 CREATE INDEX IX_PESSOA_RDP_NOME ON PESSOA_RDP (NOME) TABLESPACE G2K_PRIV_INDX COMPUTE STATISTICS
 
 /*
-após um índice ser criado e ele estiver buildado, irão utilizar do índice qualquer query 
-que utilize os campos que estão presentes no índice
+após um índice ser criado e ele estiver buildado, toda query que utilize os campos que 
+estão presentes no índice farão uso do índice.
 */
