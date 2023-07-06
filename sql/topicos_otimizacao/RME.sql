@@ -5,14 +5,14 @@ SELECT SUM(PU) FROM FUTUROS_OPER;
 SELECT * FROM VIEW_ESTRUTURA;
 
 select
-  P.NOME as "Nome do Produto",
-  DC.CONTRATO as "Nome do Contrato",
-  VE.NOME_CARTEIRA as "Nome da Carteira",
-  VE.NOME_TESOURARIA as "Nome da Tesouraria", -- também pode ser encontrada como NOME da tabela SETORES
-  VE.NOME_INSTITUICAO as "Nome da Instituição",
-  DC.NOME_EMISSOR as "Nome do Emissor", -- ao menos para alguns produtos o emissor do contrato é o devedor
-  CON.NOME as "Contraparte", 
-  C.NOME as "Corretoras",
+  P.NOME as "Nome do Produto", -- vem da tabela produtos
+  DC.CONTRATO as "Nome do Contrato", -- o contrato é referente a um produto, conseguimos joinando a tabela contrato x produtos pelo cod_produto 
+  VE.NOME_CARTEIRA as "Nome da Carteira", -- pela tabela TODAS_OPERACOES conseguimos correlacionar os produtos com outras informacoes como cod_produto, cod_carteira, assim relacionar a tabela produtos com a todas_operacoes e ela com a view_estrutura
+  VE.NOME_TESOURARIA as "Nome da Tesouraria", -- mesma coisa que o nome_carteira
+  VE.NOME_INSTITUICAO as "Nome da Instituição", -- mesma coisa que o nome_carteira
+  DC.NOME_EMISSOR as "Nome do Emissor", -- juntando os dados do contrato pelo cod_produto conseguimor obter o nome_emissor
+  CON.NOME as "Contraparte", --unindo as tabelas futuros_lef, opcoes_lef, fundos_lef e as juntando pelo cod_produto conseguir obter o nome da cod_contraparte que unindo com a CONTRAPARTES conseguimos o nome
+  C.NOME as "Corretora", -- mesma coisa que o cod_contraparte para conseguir o cod_corretora e assim juntando com a CORRETORA conseguimos obter o nome da corretora
   TOP.DATA_ENTRADA as "Data de Aquisição",
   TOP.QUANTIDADE
   --Usar tabela COTACOES
@@ -43,3 +43,23 @@ FROM
 where
 
     "NOME_CARTEIRA" in ('BB ECO PLUS FI', 'BNP PARIBAS MATCH DI FI RF REFERENCIADO CREDITO PR');
+
+/*
+[x] NOME DO PRODUTO -- vem da tabela produtos
+[x] NOME DO CONTRATO -- o contrato é referente a um produto, conseguimos joinando a tabela contrato x produtos pelo cod_produto 
+[x] NOME CARTEIRA -- pela tabela TODAS_OPERACOES conseguimos correlacionar os produtos com outras informacoes como cod_produto, cod_carteira, assim relacionar a tabela produtos com a todas_operacoes e ela com a view_estrutura
+[x] NOME TESOURARIA -- mesma coisa que o nome_carteira
+[x] NOME INSTITUIÇÃO -- mesma coisa que o nome_carteira
+[x] NOME EMISSOR -- juntando os dados do contrato pelo cod_produto conseguimor obter o nome_emissor
+[ ] NOME DEVEDOR
+[x] NOME CONTRAPARTE --unindo as tabelas futuros_lef, opcoes_lef, fundos_lef e as juntando pelo cod_produto conseguir obter o nome da cod_contraparte que unindo com a CONTRAPARTES conseguimos o nome
+[x] NOME CORRETORA -- mesma coisa que o cod_contraparte para conseguir o cod_corretora e assim juntando com a CORRETORA conseguimos obter o nome da corretora
+[ ] DATA DE AQUISIÇÃO
+[ ] QUANTIDADE
+[ ] COTAÇÃO DA DATA DE AQUISIÇÃO DA OPERAÇÃO
+[ ] COTAÇÃO DA DATA DE CÁLCULO
+[ ] POSIÇÃO AQUISIÇÃO
+[ ] POSIÇÃO DO DIA
+[ ] RESULTADO INICIO DA OPERAÇÃO
+[ ] DESPESAS CALCULADAS PELO MITRA
+*/
