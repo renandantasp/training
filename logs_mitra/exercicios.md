@@ -1,6 +1,19 @@
 ### 1. Pegue um trecho de código que você tenha familiaridade (ou um trecho qualquer do MITRA). Gere um erro localmente a partir dele, como um uso incorreto ou uma exceção. Mostre como foi a Pilha de chamadas e qual a função que contém o erro.
 
+```log
+2023-07-10 15:17:15.541 MITRA.Services não esta configurado. 
+DSK-FHM5542 :Mitra.exe: 7.8.0.198 Gerencial.dll: 7.3.0.151 Estatistica.dll: 7.0.0.0 Opcao.dll: 7.0.0.0
+Desde: 10/07/2023 15:14:22 Memória: 343216128 
+ System.Exception: MITRA.Services não esta configurado.
+   em MITRA.Portal.Main.Modulos.Front.JanelasFront.TelaMonitorLimites(Boolean ehBoleta)
+   em MITRA.Portal.Main.Modulos.Front.FrontVM.<MontaRelayCommandBotoes>b__55_6(Object param)    
+   em MITRA.Portal.Main.Modulos.Front.JanelasFront.TelaMonitorLimites(Boolean ehBoleta)
+   em MITRA.Portal.Main.Modulos.Front.FrontVM.<MontaRelayCommandBotoes>b__55_6(Object param)
+```
+
 ### 2. Dado o exercício anterior, busque uma documentação (ex: wiki interna, regra de negócio ou documentação do framework) que justifique o erro. Justifique também um uso mais adequado. Exemplo: Convert.ToString Method (System) | Microsoft Learn
+
+O erro anterior é causado sempre que o MITRA Services não está instalado e configurado. Na Wiki interna é possível encontrar uma página que fornece um passo a passo da [instalação do MITRA Services](http://wiki.lef.intra/index.php/File:Passo_a_Passo_Service.pdf), que irá consertar o erro causado.
 
 ### 3. Quais são os pontos positivos e negativos de se ter logs?
 
