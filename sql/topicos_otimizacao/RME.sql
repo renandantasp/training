@@ -24,15 +24,15 @@ from
   inner join (SELECT CONTRATO, NOME_EMISSOR, COD_PRODUTO FROM DADOS_CONTRATO ) DC on P.COD_PRODUTO = DC.COD_PRODUTO
   inner join (
   
-              select COD_PRODUTO, COD_CONTRAPARTE from FUTUROS_LEF
-              union all
-              select COD_PRODUTO, COD_CONTRAPARTE from OPCOES_LEF
-              union all
-              select COD_PRODUTO, COD_CONTRAPARTE from FUNDOS_LEF
+    select COD_PRODUTO, COD_CONTRAPARTE from FUTUROS_LEF
+    union all
+    select COD_PRODUTO, COD_CONTRAPARTE from OPCOES_LEF
+    union all
+    select COD_PRODUTO, COD_CONTRAPARTE from FUNDOS_LEF
   
-             ) LEF on LEF.COD_PRODUTO = P.COD_PRODUTO
+  ) LEF on LEF.COD_PRODUTO = P.COD_PRODUTO
           
-    inner join contrapartes con on con.cod_contraparte = lef.cod_contraparte
-    inner join (select cod_produto, valor, data from cotacoes where data = (SELECT TO_CHAR(SYSDATE-1, 'dd/mm/yy') FROM DUAL)) COTE on (p.cod_produto = COTE.cod_produto) 
-    inner join (select cod_produto, valor, data from cotacoes) COTA on (top.cod_produto = COTA.cod_produto and top.data_entrada = COTA.DATA) 
+  inner join contrapartes con on con.cod_contraparte = lef.cod_contraparte
+  inner join (select cod_produto, valor, data from cotacoes where data = (SELECT TO_CHAR(SYSDATE-1, 'dd/mm/yy') FROM DUAL)) COTE on (p.cod_produto = COTE.cod_produto) 
+  inner join (select cod_produto, valor, data from cotacoes) COTA on (top.cod_produto = COTA.cod_produto and top.data_entrada = COTA.DATA) 
 ;
