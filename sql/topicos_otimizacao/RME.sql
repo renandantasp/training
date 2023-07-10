@@ -1,38 +1,38 @@
-select
-  P.NOME as "Nome do Produto", -- vem da tabela produtos
-  DC.CONTRATO as "Contrato",  -- o contrato é referente a um produto, conseguimos joinando a tabela contrato x produtos pelo cod_produto 
-  VE.NOME_CARTEIRA as "Nome da Carteira", -- pela tabela TODAS_OPERACOES conseguimos correlacionar os produtos com outras informacoes como cod_produto, cod_carteira, assim relacionar a tabela produtos com a todas_operacoes e ela com a view_estrutura
-  VE.NOME_TESOURARIA as "Nome da Tesouraria", -- mesma coisa que o nome_carteira
-  VE.NOME_INSTITUICAO as "Nome da Instituição", -- mesma coisa que o nome_carteira
-  DC.NOME_EMISSOR as "Nome do Emissor", -- juntando os dados do contrato pelo cod_produto conseguimor obter o nome_emissor
-  CON.NOME as "Contraparte", --unindo as tabelas futuros_lef, opcoes_lef, fundos_lef e as juntando pelo cod_produto conseguir obter o nome da cod_contraparte que unindo com a CONTRAPARTES conseguimos o nome
-  COR.NOME as "Corretora", -- mesma coisa que o cod_contraparte para conseguir o cod_corretora e assim juntando com a CORRETORA conseguimos obter o nome da corretora
-  TOP.DATA_ENTRADA as "Data de Aquisição", -- dado presente na tabela TODAS_OPERACOES
-  TOP.QUANTIDADE  as "Quantidade", -- dado presente na tabela TODAS_OPERACOES
-  COTA.VALOR "Cotação da Data de Aquisição",
-  COTE.VALOR "Cotação da Data de Cálculo",
-  ROUND((TOP.PU * TOP.QUANTIDADE), 3) as "Posição de Aquisição", --Obs: o PU registrado na tabela TOP é da data_entrada (data de aquisição)
-  ROUND((COTE.VALOR * TOP.QUANTIDADE), 3) as "Posição do Dia",
+SELECT
+  P.NOME AS "Nome do Produto", -- vem da tabela produtos
+  DC.CONTRATO AS "Contrato",  -- o contrato é referente a um produto, conseguimos JOIN ando a tabela contrato x produtos pelo cod_produto 
+  VE.NOME_CARTEIRA AS "Nome da Carteira", -- pela tabela TODAS_OPERACOES conseguimos correlacionar os produtos com outras informacoes como cod_produto, cod_carteira, assim relacionar a tabela produtos com a todas_operacoes e ela com a view_estrutura
+  VE.NOME_TESOURARIA AS "Nome da Tesouraria", -- mesma coisa que o NOME_CARTEIRA
+  VE.NOME_INSTITUICAO AS "Nome da Instituição", -- mesma coisa que o NOME_CARTEIRA
+  DC.NOME_EMISSOR AS "Nome do Emissor", -- juntando os dados do contrato pelo cod_produto conseguimor obter o nome_emissor
+  CON.NOME AS "Contraparte", --unindo as tabelas futuros_lef, opcoes_lef, fundos_lef e as juntando pelo cod_produto conseguir obter o nome da cod_contraparte que unindo com a CONTRAPARTES conseguimos o nome
+  COR.NOME AS "Corretora", -- mesma coisa que o cod_contraparte para conseguir o COD_CORRETORA e assim juntando com a CORRETORA conseguimos obter o nome da corretora
+  TOP.DATA_ENTRADA AS "Data de Aquisição", -- dado presente na tabela TODAS_OPERACOES
+  TOP.QUANTIDADE  AS "Quantidade", -- dado presente na tabela TODAS_OPERACOES
+  COTA.VALOR AS "Cotação da Data de Aquisição",
+  COTE.VALOR AS "Cotação da Data de Cálculo",
+  ROUND((TOP.PU * TOP.QUANTIDADE), 3) AS "Posição de Aquisição", --Obs: o PU registrado na tabela TOP é da data_entrada (data de aquisição)
+  ROUND((COTE.VALOR * TOP.QUANTIDADE), 3) AS "Posição do Dia",
   ROUND((( COTA.VALOR / TOP.PU) * TOP.QUANTIDADE),3) AS "Resultado Início da Operação (%)",
   ROUND((( COTA.VALOR - TOP.PU) * TOP.QUANTIDADE),3) AS "Resultado Início da Operação (ABS)"
 
-from 
-  produtos p 
-  inner join todas_operacoes top on top.cod_produto = p.cod_produto
-  inner join (SELECT COD_CORRETORA, NOME FROM CORRETORAS WHERE COD_CORRETORA <> -508) cor on top.cod_corretora = cor.cod_corretora
-  inner join (SELECT COD_CARTEIRA, NOME_CARTEIRA, NOME_TESOURARIA, NOME_INSTITUICAO FROM VIEW_ESTRUTURA where COD_INSTITUICAO <> 160813 and nome_carteira = 'ELETRAWEST703 | GOYA FI MULTIMERCADO') VE on VE.COD_CARTEIRA = TOP.COD_CARTEIRA
-  inner join (SELECT CONTRATO, NOME_EMISSOR, COD_PRODUTO FROM DADOS_CONTRATO ) DC on P.COD_PRODUTO = DC.COD_PRODUTO
-  inner join (
+FROM 
+  PRODUTOS P 
+  INNER JOIN TODAS_OPERACOES TOP ON TOP.COD_PRODUTO = P.COD_PRODUTO
+  INNER JOIN (SELECT COD_CORRETORA, NOME FROM CORRETORAS WHERE COD_CORRETORA <> -508) COR ON TOP.COD_CORRETORA = COR.COD_CORRETORA
+  INNER JOIN (SELECT COD_CARTEIRA, NOME_CARTEIRA, NOME_TESOURARIA, NOME_INSTITUICAO FROM VIEW_ESTRUTURA WHERE COD_INSTITUICAO <> 160813 AND NOME_CARTEIRA = 'ELETRAWEST703 | GOYA FI MULTIMERCADO') VE ON VE.COD_CARTEIRA = TOP.COD_CARTEIRA
+  INNER JOIN (SELECT CONTRATO, NOME_EMISSOR, COD_PRODUTO FROM DADOS_CONTRATO ) DC ON P.COD_PRODUTO = DC.COD_PRODUTO
+  INNER JOIN (
   
-    select COD_PRODUTO, COD_CONTRAPARTE from FUTUROS_LEF
-    union all
-    select COD_PRODUTO, COD_CONTRAPARTE from OPCOES_LEF
-    union all
-    select COD_PRODUTO, COD_CONTRAPARTE from FUNDOS_LEF
+    SELECT COD_PRODUTO, COD_CONTRAPARTE FROM FUTUROS_LEF
+    UNION ALL
+    SELECT COD_PRODUTO, COD_CONTRAPARTE FROM OPCOES_LEF
+    UNION ALL
+    SELECT COD_PRODUTO, COD_CONTRAPARTE FROM FUNDOS_LEF
   
-  ) LEF on LEF.COD_PRODUTO = P.COD_PRODUTO
+  ) LEF ON LEF.COD_PRODUTO = P.COD_PRODUTO
           
-  inner join contrapartes con on con.cod_contraparte = lef.cod_contraparte
-  inner join (select cod_produto, valor, data from cotacoes where data = (SELECT TO_CHAR(SYSDATE-1, 'dd/mm/yy') FROM DUAL)) COTE on (p.cod_produto = COTE.cod_produto) 
-  inner join (select cod_produto, valor, data from cotacoes) COTA on (top.cod_produto = COTA.cod_produto and top.data_entrada = COTA.DATA) 
+  INNER JOIN contrapartes CON ON CON.COD_CONTRAPARTE = LEF.COD_CONTRAPARTE
+  INNER JOIN (SELECT COD_PRODUTO, VALOR, DATA FROM COTACOES WHERE DATA = (SELECT TO_CHAR(SYSDATE-10, 'dd/mm/yy') FROM DUAL)) COTE ON (P.COD_PRODUTO = COTE.COD_PRODUTO) 
+  INNER JOIN (SELECT COD_PRODUTO, VALOR, DATA FROM COTACOES) COTA ON (TOP.COD_PRODUTO = COTA.COD_PRODUTO AND TOP.DATA_ENTRADA = COTA.DATA) 
 ;
