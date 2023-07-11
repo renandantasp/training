@@ -1,19 +1,45 @@
 ### 1. Pegue um trecho de código que você tenha familiaridade (ou um trecho qualquer do MITRA). Gere um erro localmente a partir dele, como um uso incorreto ou uma exceção. Mostre como foi a Pilha de chamadas e qual a função que contém o erro.
 
+O erro seguinte é causado quando o MITRA Services não está instalado e configurado. Uma exceção é gerada e a partir dela é gerado o seguinte log: 
+
 ```log
-2023-07-10 15:17:15.541 MITRA.Services não esta configurado. 
-DSK-FHM5542 :Mitra.exe: 7.8.0.198 Gerencial.dll: 7.3.0.151 Estatistica.dll: 7.0.0.0 Opcao.dll: 7.0.0.0
-Desde: 10/07/2023 15:14:22 Memória: 343216128 
+2023-07-11 09:37:23.888 MITRA.Services não esta configurado. 
+DESKTOP-VQIA967 :Mitra.exe: 7.8.0.198 Gerencial.dll: 7.3.0.151 Estatistica.dll: 7.0.0.0 Opcao.dll: 7.0.0.0
+Desde: 11/07/2023 09:35:09 Memória: 383209472 
  System.Exception: MITRA.Services não esta configurado.
    em MITRA.Portal.Main.Modulos.Front.JanelasFront.TelaMonitorLimites(Boolean ehBoleta)
    em MITRA.Portal.Main.Modulos.Front.FrontVM.<MontaRelayCommandBotoes>b__55_6(Object param)    
    em MITRA.Portal.Main.Modulos.Front.JanelasFront.TelaMonitorLimites(Boolean ehBoleta)
    em MITRA.Portal.Main.Modulos.Front.FrontVM.<MontaRelayCommandBotoes>b__55_6(Object param)
+
 ```
 
 ### 2. Dado o exercício anterior, busque uma documentação (ex: wiki interna, regra de negócio ou documentação do framework) que justifique o erro. Justifique também um uso mais adequado. Exemplo: Convert.ToString Method (System) | Microsoft Learn
 
-O erro anterior é causado sempre que o MITRA Services não está instalado e configurado. Na Wiki interna é possível encontrar uma página que fornece um passo a passo da [instalação do MITRA Services](http://wiki.lef.intra/index.php/File:Passo_a_Passo_Service.pdf), que irá consertar o erro causado.
+O erro anterior é causado numa exceção quando clicamos no botão `Limite(Realizado)` ou `Limite(Intenções)` na aba do Front do MITRA. No caso do botão `Limite Realizado`, um RelayCommand é chamado e dentro dele isso ocorre:
+
+```c#
+if (this.permissoesActions.TryGetValue("actLimitesRealizados", out string hint))
+{
+    CriaJanela(Resources.LimitesRealizados, JanelasFront.TelaMonitorLimites(true));
+}
+```
+Essa condicional chama o método `JanelasFront.TelaMonitorLimites(true)`:
+
+```c#
+public MonitorEnquadramento TelaMonitorLimites(bool ehBoleta)
+{
+    if (string.IsNullOrEmpty(Sessao.ArquivoIni.Ler("MQ", "conexao")))
+    {
+        throw new Exception("MITRA.Services não esta configurado.");
+    }
+...
+```
+
+O Método `TelaMonitorLimites` irá ler o arquivo ini buscando as configurações referentes a instalação do MITRA.Services, e quando isso não está configurado, é gerada a exceção: `"MITRA.Services não esta configurado."`.
+
+
+Na Wiki interna é possível encontrar uma página que fornece um passo a passo da [instalação do MITRA Services](http://wiki.lef.intra/index.php/File:Passo_a_Passo_Service.pdf), que irá consertar o erro causado.
 
 ### 3. Quais são os pontos positivos e negativos de se ter logs?
 
@@ -119,15 +145,6 @@ Uma possível correção para esse bug é realizar uma verificação para saber 
 ```c#
 public static void LimpaCacheDosDicionarios(Dictionary<int, object> dicionario) 
 { 
- if (dicionario == null) return;
-
- int i = 0; 
- do 
- { 
-     dicionario[i] = null; 
-     i++; 
- } 
- while (i < dicionario.Count); 
- dicionario.Clear(); 
-}
+    if (dicionario == null) return;
+    ...
 ```
