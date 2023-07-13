@@ -1,4 +1,4 @@
-# Introdução ao Mercado Financeiro
+# 1. Introdução ao Mercado Financeiro
 
 ## Quais são os níveis da estrutura do SFN?
 
@@ -52,7 +52,7 @@ Existem quatro categorias de produtos financeiros:
 - Fundos: um acúmulo de produtos
 - Derivativos: produtos que derivam de outros produtos
 
-# Ações e Fundos de Investimento
+# 2. Ações e Fundos de Investimento
 
 ## O que são ações?
 
@@ -176,36 +176,119 @@ $$
 - Caixa: 5000
 - Nova aplicacao: 2000
 
+---
 
 PL = Ativos - Provisao + Caixa + Nova Aplicacao
+
 PL = 11000 - 1000 + 5000 + 2000
+
 PL = 17000
 
+---
+
 Nova Cota = Novo PL / QCotas
+
 Nova Cota = 17000 / 14000
+
 Nova Cota = 1.2143
 
+---
+
 QCota = Novo PL / Nova Cota
+
 QCota = 17000 / 1.2143
+
 QCota = 13999,17
 
 Portanto, no dia 02/12/2021, o novo PL do fundo LUZ Multimercado é de R$ 17.000,00, a nova cota é aproximadamente R$ 1,2143 e a nova quantidade de cotas é de aproximadamente 13.999,17.
 
-# Conceitos de Renda Fixa
+# 3. Conceitos de Renda Fixa
+
+É um ativo/título onde conhecemos as **condições** de remuneração no início do contrato.
+
+- Renda fixa públicas - emitidas pelo governo, títulos do tesouro
+- Renda fixa privadas - emitidas por instituições privadas, garantia do FGC
+
+Renda fixa costuma ter uma previsibilidade e uma segurança maior do que outros ativos.
+
+---
+
+Modo da rentabilidade:
+- Prefixado: a rentabilidade final do investimo já é conhecida desde o dia em que investiu
+- Pos-fixado: a rentabilidade varia com o tempo conforme o índice de referÇencia do investimento
 
 ## O que você entende por Marcação a Mercado de Títulos de Renda Fixa?
 
+A marcação a Mercado de Títulos de Renda Fixa é um processo de precificação diária que se baseia na atualização de valores de determinados investimentos. Ela pode incidir sobre investimentos de renda fixa, de renda variável e também em fundos de investimentos.
+
+A marcação a mercado é uma prática adotada para refletir as mudanças nas condições de mercado, como a taxa de juros, oferta e demanda e riscos percebidos. Quando a taxa de juros aumenta, por exemplo, o valor de mercado dos títulos de renda fixa geralmente diminui, e vice-versa. Da mesma forma, fatores como a classificação de crédito do emissor e as condições econômicas também podem afetar o valor de mercado.
+
 ## Como são construídas as curvas utilizadas para marcar os títulos a MtM?
+
+As curvas usadas para marcar os títulos ao valor de mercado (MtM, ou mark-to-market) podem ser construídas de diferentes maneiras, dependendo do tipo de título e das práticas adotadas pelo mercado em questão. Geralmente, existem duas abordagens comuns para construir essas curvas: a abordagem baseada em mercado e a abordagem baseada em modelagem.
+
+1. Abordagem baseada em mercado
+Nessa abordagem, as curvas de precificação são construídas com base nos preços reais de mercado observados para os títulos. Os preços de mercado podem ser obtidos a partir de transações reais, em que os títulos são comprados e vendidos, ou a partir de cotações fornecidas por participantes do mercado. Esses preços então são usados para estimar as taxas de juros ou os fatores de desconto que são aplicados aos fluxos de caixa futuros dos títulos, a fim de calcular seus valores de mercado.
+
+2. Abordagem baseada em modelagem
+Essa abordagem envolve o uso de modelos matemáticos ou estatístios para estimar as curvas de precificação dos títulos. Os modelos podem levar em consideração vários fatores, como taxas de juros de referência, prazos de títulos, volatilidade do mercado e outros elementos. Esses modelos podem ser baseados em equações financeiras complexas ou em métodos estatísticos, como a regressão de séries temporais. Os parâmetros do modelo são ajustados aos dados históricos do mercado, a fim de encontrar uma curva que se ajuste adequadamente aos preços observados.
+
+Independentemente da abordagem utilizada, é importante destacar que a construção das curvas de MtM requer dados confiáveis e representativos do mercado. Além disso, é necessário considerar a liquidez dos títulos e possíveis ajustes para refletir riscos específicos, como risco de crédito ou risco de mercado. 
+
 
 ## No caso da expectativa futura da taxa livre de risco do Brasil, qual seria uma fonte de dados possível de ser utilizada?
 
+A taxa livre de risco do Brasil é uma medida utilizada para representar a taxa de retorno esperada de um investimendo considerado livre de risco no país. Essa taxa serve como referência para calcular o custo de capital de uma empresa ou como base para estimar o retorno esperado de outros investimentos.
+
+Ela geralmente é associada a títulos públicos emitidos pelo governo brasileiro, considerados investimentos de baixo risco de crédito, uma vez que o governo é considerado um pagador confiável. Esses títulos são conhecidos como títulos do Tesouro Nacional, e os mais utilizados para esse fim são as Letras do Tesouro Nacional (LTN) e as Notas do Tesouro Nacional (NTN).
+
+Uma fonte de dados possível é o mercado de títulos do governo, especificamente os títulos do tesouro Nacional. Esses títuls são considerados referência para a taxa livre de risco, pois representam investimentos com baixo risco de crédito, emitidos pelo governo federal.
+
+Essas fontes geralmente oferecem informações atualizadas sobre as taxas de juros dos títulos do Tesouro e permitem analisar a curva de juros, que representa as taxas de diferentes prazos.
+
+
 ## O que são Renda Fixa e como são Classificadas?
+
+Renda Fixa é uma classe de investimento caracterizada pela previsibilidade dos fluxos de pagamentos de juros e do valor principal ao longo do tempo. Os investimento em Renda Fixa envolvem a compra de títulos emitidos por entidades governamentais, bancos, empresas e outras instituições financeiras. Esses títulos representam emprestimos feitos pelo investidor ao emissor, que se compromete a pagar juros periodicamente e devolver o valor principal no vencimento.
+
+A classificação dos investimentos em Renda fixa pode varias de acordo com diferentes critérios, como o emissor, o prazo, a forma de remuneração e o risco associado. A seguir estão algumas das principais classificação utilizadas:
+
+- Tesouro Direto: São títulos públicos emitidos pelo governo federal brasileiro por meio do Tesouro Nacional. Incluem títulos como Letras do Tesouro Nacional (LTN), Notas do Tesouro Nacional (NTN), Tesouro SELIC (LFT) e Tesouro IPCA+ (NTN-B).
+- Debêntures: São títulos de dívida emitidos por empresas para captar recursos. Os investidores compram debênture e recebem juros periodicamente, além do valor principal no vencimento.
+- Debêntures Incentivadas: Sâo debêntures emitidas por empresas do setor de infraestrutura e que possuem incentivos fiscais, isentando o investidor do pagamento de Imposto de Renda sobre os juros recebidos.
+- CDB (Certificado de Depósito Bancário): Títulos emitidos pelo banco como forma de captação de recursos. Os investidores emprestam dinheiro aos bancos e recebem juros e o valor principal no vencimento.
+- LCI e LCA: São títulos emitidos por instituições financeiras com lastro em crédiso imobiliários ou do agronegócio.
+
+Além dessas classificações, os investimentos em Renda Fixa também podem ser classificados de acordo com o risco de crédito do emissor.
+
+
 
 ## Quais são os Títulos Públicos existentes e suas características?
 
+No Brasil, os Títulos Públicos são emitidos pelo Tesouro Nacional por meio do programa Tesouro Direto. Existem diferentes tipos de títulos, cada um com suas características, alguns deles são:
+
+- Tesouro Selic (LFT)
+  - Paga uma remuneração atrelada à taxa Selic, a taxa básica de juros da economia brasileira
+- Tesouro Prefixado (LTN)
+  - Possui uma taxa de juros fixa desde o momento da compra
+- Tesouro IPCA+ (NTN-B e NTN-B Principal)
+  - São Corrigidos pela variação do Índice Nacional de Preços ao Consumidor Amplo (IPCA), acrescido de uma taxa de juros real
+  - NTN-B pagam juros semestrais e o valor principal é atualizado diariamente pelo IPCA
+  - NTN-B Principal não pagam juros semestrais e o investidor recebe o valor principal corrigido pela inflação no vencimento
+- Tesouro IPCA com juros semestrais (NTN-B)
+  - São corrigidos pelo IPCA e pagam juros semestrais
+
 ## O que é uma debenture e por qual motivo uma empresa emite? Comparado com o IPO, qual a diferença?
 
-# Introdução a Derivativos
+Uma debenture é um título de dívida emitido por uma empresa para captar recursos financeiros. Ao emitir debenture, uma empresa toma empréstimos de investidores, que se tornam seus credores. Em toda, a empresa paga juros periódicos e devolve o valor principal investido no vencimento.
+
+As empresas emitem debentures como uma forma de obter financiamento para seus projetos e atividades. Ao contrário de um empréstimo bancário tradicional a emissão de debentures permite que a empresa obtenha recursos de vários investidores, diversificando suas fontes de financiamento.
+
+Comparado com o IPO, que é a oferta pública inicial de ações, as debentures representam títulos de dívida, enquanto o IPO envolve a emissão de ações, que representam a propriedade da empresa. A emissão de debentures tem como objetivo captar recursos para financiar projetos específicos da empresa, enquanto o IPO busca captar recursos para o crecimento e a expansão do negócio.
+
+Em resumo, debêntures são títulos de dívida emitidos por empresas para captar recursos financeiros, enquanto o IPO envolve a emissão de ações. Ambas são formas de captação de recursos para as empresas, cada uma com suas características e finalidades específicas.
+
+# 4. Introdução a Derivativos
 
 
 ## O que é um derivativo?
@@ -256,16 +339,17 @@ A principal diferença entre opções, futuros e o mercado a termo está na obri
 - Futuros são contratos com obrigação mútua de compra ou venda.
 - Mercado a termo é um acordo personalizado entre as partes, sem padronização e negociação em bolsa.
 
+# 5. Rentabilidade e Resultado
 
-## Construa os gráficos de Payoff (pagamento no vencimento) das operações de opções abaixo e explique cada um deles, para isso defina os valores de strike e valores do ativo base no tempo:
+## O que é Resultado?
 
-### Compra de uma Call
+O resultado refere-se ao lucro ou prejuízo obtido por uma empresa ou empreendimento durante um período específico. É o saldo entre as receitas e as depsesas geradas pelas atividades da empresa em um determinado período contábil. O resultado é essencia para avaliar a performance financeira de uma empresa e determinar seu lucro líquido ou prejuízo líquido.
 
-### Venda de uma Call
+## O que é Rentabilidade?
 
-### Compra de uma Put
+A rentabilidade refere-se ao retorno ou lucro obtido em relação ao investimento realizado. É uma medida que avalia o desempenho financeiro de um investimento ou de uma atividade econômica específica. A rentabilidade é geralmente expressa em termos percentuais e pode ser calculada de várias maneiras, dependendo do contexto. Por exemplo, a rentabilidade de um investimento pode ser calculada como a taxa de retorno anual obtida em relação ao valor investido.
 
-### Venda de uma Put
+## Quais são os tipos de metodologia de calculo de rentabilidade e quais são suas características?
+## O que é Gross up?
 
-
-
+geralmente se refere a uma prática de ajuste ou correção de valores para levar em consideração impostos ou deduções. No contexto de rendimentos financeiros, o gross up pode ocorrer quando um pagamento é feito bruto, sem a dedução de impostos retidos na fonte. O valor é então ajustado para incluir o montante dos impostos, de modo que o destinatário receba o valor líquido desejado.
