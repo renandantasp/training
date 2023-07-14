@@ -290,7 +290,6 @@ Em resumo, debêntures são títulos de dívida emitidos por empresas para capta
 
 # 4. Introdução a Derivativos
 
-
 ## O que é um derivativo?
 
 Um derivativo é um instrumento financeiro que deriva seu valor de um ativo subjacente. O ativo subjacente pode ser qualquer coisa, como ações, moedas, commodities, índices, taxa de juros, entre outros. Os derivativos são contratos financeiros que são usados para especulação ou hedging (proteção) contra flutuaçõe de preços do ativo subjacente.
@@ -350,6 +349,65 @@ O resultado refere-se ao lucro ou prejuízo obtido por uma empresa ou empreendim
 A rentabilidade refere-se ao retorno ou lucro obtido em relação ao investimento realizado. É uma medida que avalia o desempenho financeiro de um investimento ou de uma atividade econômica específica. A rentabilidade é geralmente expressa em termos percentuais e pode ser calculada de várias maneiras, dependendo do contexto. Por exemplo, a rentabilidade de um investimento pode ser calculada como a taxa de retorno anual obtida em relação ao valor investido.
 
 ## Quais são os tipos de metodologia de calculo de rentabilidade e quais são suas características?
+
+Existem várias metodologias de cálculo de rentabilidade, cada uma com suas características específicas. A seguir, temos um dos principais métodos:
+
+- Rentabilidade Simples: É o método mais básico de cálculo de rentabilidade, que considera apenas o retorno absoluto obtido em relação ao valor inicial do investimento. A rentabilidade simples não leva em conta o efeito do tempo nem reinvestimento de ganhos;
+- Rentabilidade Percentual: Também conhecida como taxa de retorno, é o cálculo da rentabilidade em termos percentuais. É a divisão do lucro ou ganho pelo valor inicial do investimento, multiplicado por 100. Essa medida permite comparar investimentos de diferentes valores;
+- Rentabilidade Nominal: A rentabilidade bruta, sem considerar a inflação ou outros fatores. É o retorno total obtido em termos monetários;
+- Rentabilidade Real: É a rentabilidade líquida, que leva em conta a inflação ou outos fatores que possam afetar o poder de compra do investidor. É calculada subtraindo-se a taxa de inflação do retorno nominal.
+
 ## O que é Gross up?
 
-geralmente se refere a uma prática de ajuste ou correção de valores para levar em consideração impostos ou deduções. No contexto de rendimentos financeiros, o gross up pode ocorrer quando um pagamento é feito bruto, sem a dedução de impostos retidos na fonte. O valor é então ajustado para incluir o montante dos impostos, de modo que o destinatário receba o valor líquido desejado.
+O termo Gross Up  se refere a uma prática de ajuste ou correção de valores para levar em consideração impostos ou deduções. No contexto de rendimentos financeiros, o gross up pode ocorrer quando um pagamento é feito bruto, sem a dedução de impostos retidos na fonte. O valor é então ajustado para incluir o montante dos impostos, de modo que o destinatário receba o valor líquido desejado.
+
+# Gestão de Risco e VaR
+
+## Qual a motivação para realizar o cálculo de risco de uma carteira?
+
+O cálculo de risco de uma carteira de investimentos é fundamental para os investidores por diversas razões: tomada de decisão informada, diversificação eficiente, definição de metas realistas, monitoramento e controle de risco. É uma ferramenta essencial para os investidores gerenciarem seus investimentos de forma adequada e otimizada.
+
+## Analise a soma dos riscos individuals das ações, e o risco sintético consolidade das ações. Qual é o maior, o Risco Total ou a soma dos Riscos Individuais? Essa relação (maior-menor) pode ser invertida? Por que?
+
+O risco total de uma carteira de investimentos pode ser menor, igual, ou até mesmo maior do que a simples soma dos riscos individuais das ações que as compõem. Isso ocorre devido a um fenômeno conhecido como diversificação.
+
+A diversificação é o princípio fundamental de redução de risco em uma carteira de investimentos. Quando diferentes ativos são combinados em uma carteira, as características individuais de cada ativo, incluindo seus riscos, podem se comportar de maneira não correlacionada ou correlacionada de forma negativa. Isso significa que alguns ativos podem subir enquanto outros caem, o que pode ajudar a equilibrar o risco total da carteira.
+
+Como resultado, a diversificação pode reduzir o risco total da carteira além da simples soma dos riscos individuais. A medida dessa redução de risco é conhecida como risco sintético consolidado da carteira, que é calculado levando em consideração a correlação entre os ativos.
+
+## Como se calculam os retornos dos ativos? 
+
+O cálculo dos retornos dos ativos pode ser realizado de diferentes maneiras, dependendo da disponibilidade e do tipo de dados disponíveis. A seguir, descrevo duas das principais abordagens para calcular retorno dos ativos:
+
+- Retorno Simples: É calculado como a diferença entre o preço final e o preço inicial do ativo, dividido pelo preço inicial e multiplicado por 100 para obter o retorno em termos percentuais. $\frac{PF-PI}{PI}*100$;
+- Retorno Logarítmico: O retorno logarítmico é calculado usando o ln dos preços ativos. A fórmula é a seguinte: $\ln(\frac{PF}{PI})$. O retorno logarítmico tem a vantagem de ser aditivo ao longo do tempo, o que permite somar os retornos de vários períodos para obter o retorno total acumulado.
+
+## Qual a diferença entre retorno geométrico e retorno aritmético? Qual é utilizado no mercado? Por quê?
+
+
+## Qual é a definição de VaR? 
+
+VaR (Value at Risk) é uma medida de risco utilizada para estimar as perdas potenciais em um investimento ou carteira de investimentos em condições normais de mercado, em um determinado intervalo de confiança e horizonte de tempo.
+
+O VaR é expresso em termos monetários e representa o valor máximo que um investimento ou carteira de investimentos pode perder em um dado intervalo de tempo com uma probabilidade específica. Por exemplo, um VaR de 5% em um horizonte de tempo de um dia significa que existe uma probabilidade de 5% de que as perdas excedam o valor estabelecido pelo VaR.
+
+## Quais são os três modelos de análise do VaR? Quais são suas vantagens e desvantagens?
+
+- VaR Paramétrico:
+  - É um método simples de calcular o VaR. Assume uma distribuição paramétrica dos retornos, como a distribuição normal, o que facilita a estimativa do var e também pode ser computacionalmente eficiente em comparação com os outros métodos
+  - O VaR Paramétrico supõe uma distribuição normal dos retornos, o que nao pode nao ser adequado para capturar eventos extremos. Além disso, ele assume que os parâmetros da distrbuição permanecem constantes ao longo do tempo
+- VaR Histórico:
+  - O VaR Histórico utiliza o histórico de retornos passados para estimar o VaR, o que torna menos dependente de suposições sobre a distribuição dos retornos. Ele pode caputrar melhor eventos extremos, uma vez que ele leva em conta a ocorrência real de perdas passadas
+  - O VaR Histórico pode não levar em consideração mudanças nas condições de mercado ao longo do tempo. Ele também pode ser sensível a períodos de volatilidade atípica ou anomalias no histórico dos retornos
+- VaR baseado em Simulação de Monte Carlo
+  - É o método mais flexível, pois permite que diferentes distribuições sejam consideradas e leva em conta a dinâmica dos retornos e as correlações entre os ativos. Ele pode ser especialmente util para simular cenários complexos ou incorporar modelos de volatilidade estocástica
+  - Ele pode ser computacionalmente intensivo, requer uma modelagem cuidadosa dos retornos e das correlações. Também está sujeito a erros de amostragem se o número de simulações não for grande o suficiente.
+
+## Quais os modelos de volatilidade são mais utilizados no mercado?
+
+No mercado financeiro, existem diferentes modelos de volatilidade utilizados para estimar a volatilidade dos ativos financeiros. Alguns dos modelos mais comuns são: Volatilidade Histórica, Volatilidade Implícita, Modelos ARCH/GARCH, Modelos de Volatilidade Estocástica e Modelos de Média-Móvel.
+
+É importante destacar que cada modelo de volatilidade tem suas próprias suposições e limitações. A escolha do modelo depende das características dos ativos, dos dados disponíveis e dos objetivos da análise. Muitas vezes, é recomendável utilizar múltiplos modelos de volatilidade e considerar outras informações e indicadores para obter uma estimativa mais precisa e robusta da volatilidade dos ativos financeiros.
+
+
+## Para que serve o mapeamento em vértices e quais são os tipos de mapeamento? Como se constrói os retornos desses vértices?
